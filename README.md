@@ -6,6 +6,8 @@
 
 <!-- gitblog start -->
 
+- [Fenryx 技術部落格正式上線](https://github.com/fenryx-tech/fenryx-blog/issues/1) - 2025-11-23
+
 <!-- gitblog end -->
 
 ---
