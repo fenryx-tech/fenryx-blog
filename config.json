@@ -1,0 +1,25 @@
+{
+    "title": "Fenryx Engineering Blog",
+    "subTitle": "技術部落格 - 軟體開發 | 網站技術 | 資訊安全",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/191786188",
+    "GMEEK_VERSION": "last",
+    "filingNum": "",
+    "one498teleYear": "",
+    "i18n": "CN",
+    "displayTitle": "Fenryx Blog",
+    "homeUrl": "https://fenryx.tech",
+    "faviconUrl": "https://fenryx.tech/favicon.ico",
+    "email": "techfenryx@gmail.com",
+    "startSite": "",
+    "singlePage": [],
+    "iconList": {},
+    "exlink": {
+        "官網": "https://fenryx.tech",
+        "GitHub": "https://github.com/fenryx-tech"
+    },
+    "commentLabelColor": "#D72638",
+    "yearColorList": ["#D72638", "#2563EB", "#16A34A", "#A7A7A7"],
+    "script": "",
+    "style": "",
+    "bottomText": "<p>© 2024 Fenryx 銳狼科技 | Engineering resilience through offensive thinking</p>"
+}
