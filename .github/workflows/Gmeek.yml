@@ -47,21 +47,23 @@ jobs:
           pip install --upgrade pip
           pip install -r /tmp/Gmeek/requirements.txt
 
+      - name: Backup workflow
+        run: cp .github/workflows/Gmeek.yml /tmp/Gmeek.yml.bak
+
       - name: Generate new html
         run: |
           cp -r /tmp/Gmeek/templates templates
           python /tmp/Gmeek/Gmeek.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }}
 
-      - name: Commit and push
+      - name: Restore workflow and push
         run: |
+          cp /tmp/Gmeek.yml.bak .github/workflows/Gmeek.yml
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
           if ! git diff-index --quiet HEAD; then
             git commit -m "Generate Gmeek blog pages"
-            git fetch origin main
-            git rebase origin/main
-            git push
+            git push --force-with-lease
           fi
 
       - name: Upload artifact
