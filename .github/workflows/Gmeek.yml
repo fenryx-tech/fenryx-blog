@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Pages
         id: pages
@@ -50,12 +52,17 @@ jobs:
           cp -r /tmp/Gmeek/templates templates
           python /tmp/Gmeek/Gmeek.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }}
 
-      - name: Update html
+      - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
-          git diff-index --quiet HEAD || (git commit -m "Generate Gmeek blog pages" && git pull --rebase && git push)
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "Generate Gmeek blog pages"
+            git fetch origin main
+            git rebase origin/main
+            git push
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
