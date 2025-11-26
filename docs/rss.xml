@@ -1,5 +1,43 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Fenryx Engineering Blog</title><link>https://fenryx.tech</link><description>技術部落格 - 軟體開發 | 網站技術 | 資訊安全</description><copyright>Fenryx Engineering Blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/191786188</url><title>avatar</title><link>https://fenryx.tech</link></image><lastBuildDate>Sun, 23 Nov 2025 14:08:24 +0000</lastBuildDate><managingEditor>Fenryx Engineering Blog</managingEditor><ttl>60</ttl><webMaster>Fenryx Engineering Blog</webMaster><item><title>Fenryx 技術部落格正式上線</title><link>https://fenryx.tech/post/Fenryx%20-ji-shu-bu-luo-ge-zheng-shi-shang-xian.html</link><description># Fenryx 技術部落格正式上線
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Fenryx Engineering Blog</title><link>https://fenryx.tech</link><description>技術部落格 - 軟體開發 | 網站技術 | 資訊安全</description><copyright>Fenryx Engineering Blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/191786188</url><title>avatar</title><link>https://fenryx.tech</link></image><lastBuildDate>Wed, 26 Nov 2025 09:04:27 +0000</lastBuildDate><managingEditor>Fenryx Engineering Blog</managingEditor><ttl>60</ttl><webMaster>Fenryx Engineering Blog</webMaster><item><title>OWASP Top 10 2025：完整解析與防禦指南</title><link>https://fenryx.tech/post/OWASP%20Top%2010%202025%EF%BC%9A-wan-zheng-jie-xi-yu-fang-yu-zhi-nan.html</link><description>&lt;div align='center'&gt;
+
+&lt;img src='https://raw.githubusercontent.com/fenryx-tech/.github/main/profile/assets/logo/logo-128.png' alt='Fenryx Logo' width='128' height='128'&gt;
+
+
+# OWASP Top 10 2025：完整解析與防禦指南
+
+**以攻擊視角打造強韌系統**
+
+&lt;/div&gt;
+
+[![Website](https://img.shields.io/badge/Website-fenryx.tech-D72638?style=flat-square)](https://fenryx.tech)
+[![Email](https://img.shields.io/badge/Email-contact@fenryx.tech-D72638?style=flat-square)](mailto:contact@fenryx.tech)
+
+&lt;/div&gt;
+
+&lt;hr style='border: none; border-top: 2px solid #D72638; margin: 2em 0;'&gt;
+
+**發布日期：** 2025-11-26  
+**作者：** Fenryx 技術團隊  
+**版本：** 1.0  
+**參考來源：** https://owasp.org/Top10/2025/
+
+&lt;hr style='border: none; border-top: 2px solid #D72638; margin: 2em 0;'&gt;
+
+## 文章資訊
+
+- **目標關鍵字：** OWASP Top 10 2025, Web安全, 應用程式安全, OWASP, Web Application Security
+- **目標讀者：** 開發者、資安人員、技術決策者、CTO、資安主管
+- **預估閱讀時間：** 25-30 分鐘
+- **難度等級：** 中級
+
+&lt;hr style='border: none; border-top: 2px solid #D72638; margin: 2em 0;'&gt;
+
+## 1. 引言
+
+### OWASP Top 10 是什麼？
+
+OWASP（Open Web Application Security Project）是一個非營利組織，致力於改善軟體安全性。</description><guid isPermaLink="true">https://fenryx.tech/post/OWASP%20Top%2010%202025%EF%BC%9A-wan-zheng-jie-xi-yu-fang-yu-zhi-nan.html</guid><pubDate>Wed, 26 Nov 2025 08:40:44 +0000</pubDate></item><item><title>Fenryx 技術部落格正式上線</title><link>https://fenryx.tech/post/Fenryx%20-ji-shu-bu-luo-ge-zheng-shi-shang-xian.html</link><description># Fenryx 技術部落格正式上線
 
 歡迎來到 Fenryx 銳狼科技的技術部落格！
 

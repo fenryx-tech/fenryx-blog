@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://fenryx.tech/favicon.ico"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="<div align='center'>
+
+<img src='https://raw.githubusercontent.com/fenryx-tech/.github/main/profile/assets/logo/logo-128.png' alt='Fenryx Logo' width='128' height='128'>
+
+
+# OWASP Top 10 2025：完整解析與防禦指南
+
+**以攻擊視角打造強韌系統**
+
+</div>
+
+[![Website](https://img.shields.io/badge/Website-fenryx.tech-D72638?style=flat-square)](https://fenryx.tech)
+[![Email](https://img.shields.io/badge/Email-contact@fenryx.tech-D72638?style=flat-square)](mailto:contact@fenryx.tech)
+
+</div>
+
+<hr style='border: none; border-top: 2px solid #D72638; margin: 2em 0;'>
+
+**發布日期：** 2025-11-26  
+**作者：** Fenryx 技術團隊  
+**版本：** 1.0  
+**參考來源：** https://owasp.org/Top10/2025/
+
+<hr style='border: none; border-top: 2px solid #D72638; margin: 2em 0;'>
+
+## 文章資訊
+
+- **目標關鍵字：** OWASP Top 10 2025, Web安全, 應用程式安全, OWASP, Web Application Security
+- **目標讀者：** 開發者、資安人員、技術決策者、CTO、資安主管
+- **預估閱讀時間：** 25-30 分鐘
+- **難度等級：** 中級
+
+<hr style='border: none; border-top: 2px solid #D72638; margin: 2em 0;'>
+
+## 1. 引言
+
+### OWASP Top 10 是什麼？
+
+OWASP（Open Web Application Security Project）是一個非營利組織，致力於改善軟體安全性。">
+<meta property="og:title" content="OWASP Top 10 2025：完整解析與防禦指南">
+<meta property="og:description" content="<div align='center'>
+
+<img src='https://raw.githubusercontent.com/fenryx-tech/.github/main/profile/assets/logo/logo-128.png' alt='Fenryx Logo' width='128' height='128'>
+
+
+# OWASP Top 10 2025：完整解析與防禦指南
+
+**以攻擊視角打造強韌系統**
+
+</div>
+
+[![Website](https://img.shields.io/badge/Website-fenryx.tech-D72638?style=flat-square)](https://fenryx.tech)
+[![Email](https://img.shields.io/badge/Email-contact@fenryx.tech-D72638?style=flat-square)](mailto:contact@fenryx.tech)
+
+</div>
+
+<hr style='border: none; border-top: 2px solid #D72638; margin: 2em 0;'>
+
+**發布日期：** 2025-11-26  
+**作者：** Fenryx 技術團隊  
+**版本：** 1.0  
+**參考來源：** https://owasp.org/Top10/2025/
+
+<hr style='border: none; border-top: 2px solid #D72638; margin: 2em 0;'>
+
+## 文章資訊
+
+- **目標關鍵字：** OWASP Top 10 2025, Web安全, 應用程式安全, OWASP, Web Application Security
+- **目標讀者：** 開發者、資安人員、技術決策者、CTO、資安主管
+- **預估閱讀時間：** 25-30 分鐘
+- **難度等級：** 中級
+
+<hr style='border: none; border-top: 2px solid #D72638; margin: 2em 0;'>
+
+## 1. 引言
+
+### OWASP Top 10 是什麼？
+
+OWASP（Open Web Application Security Project）是一個非營利組織，致力於改善軟體安全性。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://fenryx.tech/post/OWASP%20Top%2010%202025%EF%BC%9A-wan-zheng-jie-xi-yu-fang-yu-zhi-nan.html">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/191786188">
+<title>OWASP Top 10 2025：完整解析與防禦指南</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">OWASP Top 10 2025：完整解析與防禦指南</h1>
+<div class="title-right">
+    <a href="https://fenryx.tech" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/fenryx-tech/fenryx-blog/issues/2" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><div align="center">
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://raw.githubusercontent.com/fenryx-tech/.github/main/profile/assets/logo/logo-128.png"><img src="https://raw.githubusercontent.com/fenryx-tech/.github/main/profile/assets/logo/logo-128.png" alt="Fenryx Logo" width="128" height="128" style="max-width: 100%; height: auto; max-height: 128px;"></a>
+<h1>OWASP Top 10 2025：完整解析與防禦指南</h1>
+<p><strong>以攻擊視角打造強韌系統</strong></p>
+</div>
+<p><a href="https://fenryx.tech" rel="nofollow"><img src="https://camo.githubusercontent.com/3ed2894029c32cbd520e70fccf34990097b2669a9ca54edde09053f6a00f3df8/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f576562736974652d66656e7279782e746563682d4437323633383f7374796c653d666c61742d737175617265" alt="Website" data-canonical-src="https://img.shields.io/badge/Website-fenryx.tech-D72638?style=flat-square" style="max-width: 100%;"></a><br>
+<a href="mailto:contact@fenryx.tech"><img src="https://camo.githubusercontent.com/c735b3d4421fb44580cea73473d308eabbcd4c757b1953cdb51fe2bda79e1c7d/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f456d61696c2d636f6e746163744066656e7279782e746563682d4437323633383f7374796c653d666c61742d737175617265" alt="Email" data-canonical-src="https://img.shields.io/badge/Email-contact@fenryx.tech-D72638?style=flat-square" style="max-width: 100%;"></a></p>
+
+<hr>
+<p><strong>發布日期：</strong> 2025-11-26<br>
+<strong>作者：</strong> Fenryx 技術團隊<br>
+<strong>版本：</strong> 1.0<br>
+<strong>參考來源：</strong> <a href="https://owasp.org/Top10/2025/" rel="nofollow">https://owasp.org/Top10/2025/</a></p>
+<hr>
+<h2>文章資訊</h2>
+<ul>
+<li><strong>目標關鍵字：</strong> OWASP Top 10 2025, Web安全, 應用程式安全, OWASP, Web Application Security</li>
+<li><strong>目標讀者：</strong> 開發者、資安人員、技術決策者、CTO、資安主管</li>
+<li><strong>預估閱讀時間：</strong> 25-30 分鐘</li>
+<li><strong>難度等級：</strong> 中級</li>
+</ul>
+<hr>
+<h2>1. 引言</h2>
+<h3>OWASP Top 10 是什麼？</h3>
+<p>OWASP（Open Web Application Security Project）是一個非營利組織，致力於改善軟體安全性。OWASP Top 10 是該組織每 3-4 年發布一次的報告，列出 Web 應用程式最常見的 10 種安全風險。</p>
+<p>這份報告基於全球數千個應用程式的真實漏洞資料，是業界最權威的 Web 應用程式安全指南之一。</p>
+<h3>為什麼 2025 版本重要？</h3>
+<p>OWASP Top 10 2025 版本反映了當前 Web 應用程式安全的最新威脅趨勢。與 2021 版本相比，2025 版本：</p>
+<ul>
+<li><strong>反映新威脅</strong> - 包含雲端安全、API 安全、供應鏈安全等新興威脅</li>
+<li><strong>更新資料</strong> - 基於最新的漏洞統計資料</li>
+<li><strong>調整優先順序</strong> - 根據實際影響調整漏洞排名</li>
+</ul>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/cf5aadfd5c781f1478f3c0020ee926b264c176eec5e4a71339fce658c528f960/68747470733a2f2f6f776173702e6f72672f546f7031302f6173736574732f323032352d6d617070696e67732e706e67"><img src="https://camo.githubusercontent.com/cf5aadfd5c781f1478f3c0020ee926b264c176eec5e4a71339fce658c528f960/68747470733a2f2f6f776173702e6f72672f546f7031302f6173736574732f323032352d6d617070696e67732e706e67" alt="OWASP Top 10 2025" data-canonical-src="https://owasp.org/Top10/assets/2025-mappings.png" style="max-width: 100%;"></a></p>
+<h3>本文將涵蓋什麼？</h3>
+<p>本文將深入解析 OWASP Top 10 2025 的每個項目，包含：</p>
+<ul>
+<li><strong>詳細解析</strong> - 每種漏洞的原理、影響與攻擊方式</li>
+<li><strong>實際案例</strong> - 真實世界的攻擊案例與場景</li>
+<li><strong>防禦最佳實踐</strong> - 具體的防禦措施與程式碼範例</li>
+<li><strong>實務建議</strong> - 如何將防禦整合到開發流程</li>
+</ul>
+<p>無論您是開發者、資安人員，還是技術決策者，這篇文章都將為您提供實用的 Web 應用程式安全知識。</p>
+<blockquote>
+<p><strong>Fenryx 觀點</strong><br>
+我們相信，真正的安全來自於理解攻擊者的思維。透過攻擊者視角檢視系統，我們能找出傳統防禦方法容易忽略的弱點，並建立更強韌的防禦機制。</p>
+</blockquote>
+<hr>
+<h2>2. OWASP Top 10 2025 概述</h2>
+<h3>Top 10 2025 完整列表</h3>
+<p>根據 <a href="https://owasp.org/Top10/2025/0x00_2025-Introduction/" rel="nofollow">OWASP Top 10 2025 官方文件</a>，以下是 Web 應用程式最常見的 10 種安全風險：</p>
+<ol>
+<li><strong>A01:2025 – Broken Access Control（權限控制失效）</strong></li>
+<li><strong>A02:2025 – Security Misconfiguration（安全設定錯誤）</strong></li>
+<li><strong>A03:2025 – Software Supply Chain Failures（軟體供應鏈失敗）</strong></li>
+<li><strong>A04:2025 – Cryptographic Failures（加密機制失效）</strong></li>
+<li><strong>A05:2025 – Injection（注入攻擊）</strong></li>
+<li><strong>A06:2025 – Insecure Design（不安全設計）</strong></li>
+<li><strong>A07:2025 – Authentication Failures（身份驗證失敗）</strong></li>
+<li><strong>A08:2025 – Software or Data Integrity Failures（軟體或資料完整性失敗）</strong></li>
+<li><strong>A09:2025 – Logging &amp; Alerting Failures（日誌與告警失敗）</strong></li>
+<li><strong>A10:2025 – Mishandling of Exceptional Conditions（異常條件處理不當）</strong></li>
+</ol>
+<blockquote>
+<p><strong>重要說明：</strong> OWASP Top 10 2025 版本對比 2021 版本有重大變化，包括新增項目（A03: Software Supply Chain Failures、A10: Mishandling of Exceptional Conditions）、項目順序調整，以及部分項目名稱更新。本文基於 2025 版本撰寫，參考來源：<a href="https://owasp.org/Top10/2025/" rel="nofollow">https://owasp.org/Top10/2025/</a></p>
+</blockquote>
+<h3>2025 版本的重要更新</h3>
+<p>2025 版本的內容已根據最新威脅趨勢進行了重要更新：</p>
+<ul>
+<li><strong>API 安全強化</strong> - 所有項目都增加了針對 API 安全的最佳實踐和範例</li>
+<li><strong>雲端原生安全</strong> - 增加了雲端環境（AWS、Azure、GCP）的安全考量</li>
+<li><strong>供應鏈安全</strong> - 更強調第三方元件、開源函式庫和 CI/CD 管道的安全風險</li>
+<li><strong>自動化威脅</strong> - 關注 AI/ML 驅動的自動化攻擊和防禦策略</li>
+<li><strong>DevSecOps 整合</strong> - 強調將安全整合到開發和部署流程中</li>
+<li><strong>實際案例更新</strong> - 更新了 2021-2025 年間的真實攻擊案例</li>
+</ul>
+<h3>2025 版本反映的新趨勢</h3>
+<ol>
+<li><strong>API 優先架構的普及</strong> - RESTful API、GraphQL 成為主要攻擊面</li>
+<li><strong>雲端原生應用的安全挑戰</strong> - 容器、微服務、Serverless 架構帶來新的安全考量</li>
+<li><strong>供應鏈攻擊的加劇</strong> - Log4j、SolarWinds 等事件凸顯供應鏈安全的重要性</li>
+<li><strong>自動化攻擊的演進</strong> - AI/ML 技術被用於自動化漏洞發現和攻擊</li>
+<li><strong>零信任架構的採用</strong> - 不再信任內部網路，所有存取都需要驗證</li>
+</ol>
+<hr>
+<h2>3. A01:2025 – Broken Access Control（權限控制失效）</h2>
+<h3>3.1 漏洞概述</h3>
+<p><strong>定義：</strong> 權限控制失效是指應用程式未能正確實施存取控制機制，導致未授權用戶可以存取本應受限的資源或功能。</p>
+<p><strong>嚴重程度：</strong> Critical（嚴重）</p>
+<p><strong>影響範圍：</strong></p>
+<ul>
+<li>敏感資料外洩</li>
+<li>未授權功能存取</li>
+<li>用戶資料被篡改</li>
+<li>系統完整性受損</li>
+</ul>
+<h3>3.2 攻擊原理</h3>
+<p>權限控制失效通常發生在以下情況：</p>
+<ol>
+<li>
+<p><strong>水平權限提升（Horizontal Privilege Escalation）</strong></p>
+<ul>
+<li>用戶 A 可以存取用戶 B 的資料</li>
+<li>例如：<code class="notranslate">/api/user/123</code> 可以存取其他用戶的資料</li>
+</ul>
+</li>
+<li>
+<p><strong>垂直權限提升（Vertical Privilege Escalation）</strong></p>
+<ul>
+<li>普通用戶可以執行管理員功能</li>
+<li>例如：普通用戶可以刪除其他用戶</li>
+</ul>
+</li>
+<li>
+<p><strong>直接物件參考（IDOR - Insecure Direct Object Reference）</strong></p>
+<ul>
+<li>透過修改 URL 參數存取未授權資源</li>
+<li>例如：<code class="notranslate">/api/order/1001</code> 改為 <code class="notranslate">/api/order/1002</code></li>
+</ul>
+</li>
+<li>
+<p><strong>功能層級存取控制缺失</strong></p>
+<ul>
+<li>API 端點缺少權限檢查</li>
+<li>前端隱藏功能但後端未驗證</li>
+</ul>
+</li>
+</ol>
+<h3>3.3 實際案例</h3>
+<p><strong>案例 1：電商網站 IDOR 漏洞</strong></p>
+<p>攻擊者發現訂單查詢 API：</p>
+<pre class="notranslate"><code class="notranslate">GET /api/orders/12345
+</code></pre>
+<p>透過修改訂單 ID，攻擊者可以查看其他用戶的訂單資訊，包括：</p>
+<ul>
+<li>收貨地址</li>
+<li>電話號碼</li>
+<li>購買記錄</li>
+</ul>
+<p><strong>案例 2：社交媒體平台權限提升</strong></p>
+<p>攻擊者發現刪除貼文功能：</p>
+<pre class="notranslate"><code class="notranslate">DELETE /api/posts/123
+</code></pre>
+<p>雖然前端只顯示「刪除我的貼文」，但後端未驗證貼文所有者，導致攻擊者可以刪除任何人的貼文。</p>
+<h3>3.4 防禦最佳實踐</h3>
+<h4>設計階段防禦</h4>
+<ol>
+<li>
+<p><strong>最小權限原則（Principle of Least Privilege）</strong></p>
+<ul>
+<li>用戶只獲得完成任務所需的最小權限</li>
+<li>定期審查與撤銷不必要的權限</li>
+</ul>
+</li>
+<li>
+<p><strong>角色基礎存取控制（RBAC）</strong></p>
+<ul>
+<li>定義清晰的角色與權限</li>
+<li>實施角色層級的存取控制</li>
+</ul>
+</li>
+</ol>
+<h4>開發階段防禦</h4>
+<ol>
+<li>
+<p><strong>統一權限檢查中間件</strong></p>
+<ul>
+<li>在 API 層實施統一的權限檢查</li>
+<li>避免在每個端點重複實作</li>
+</ul>
+</li>
+<li>
+<p><strong>資源擁有者驗證</strong></p>
+<ul>
+<li>驗證用戶是否有權存取特定資源</li>
+<li>使用資源層級的權限檢查</li>
+</ul>
+</li>
+</ol>
+<h4>程式碼範例</h4>
+<p><strong>不安全的實作：</strong></p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 危險：未驗證用戶是否有權存取此訂單</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">(</span><span class="pl-s">'/api/orders/:orderId'</span><span class="pl-kos">,</span> <span class="pl-k">async</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-k">const</span> <span class="pl-s1">order</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">Order</span><span class="pl-kos">.</span><span class="pl-en">findById</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">params</span><span class="pl-kos">.</span><span class="pl-c1">orderId</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-s1">order</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p><strong>安全的實作：</strong></p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 安全：驗證訂單屬於當前用戶</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">(</span><span class="pl-s">'/api/orders/:orderId'</span><span class="pl-kos">,</span> <span class="pl-s1">authenticateUser</span><span class="pl-kos">,</span> <span class="pl-k">async</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-k">const</span> <span class="pl-s1">order</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">Order</span><span class="pl-kos">.</span><span class="pl-en">findOne</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">_id</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">params</span><span class="pl-kos">.</span><span class="pl-c1">orderId</span><span class="pl-kos">,</span>
+    <span class="pl-c1">userId</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">user</span><span class="pl-kos">.</span><span class="pl-c1">id</span>  <span class="pl-c">// 驗證資源擁有者</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">order</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">404</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Order not found'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+  
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-s1">order</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p><strong>使用中間件統一檢查：</strong></p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 權限檢查中間件</span>
+<span class="pl-k">const</span> <span class="pl-en">checkResourceOwnership</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-s1">resourceModel</span><span class="pl-kos">,</span> <span class="pl-s1">userIdField</span> <span class="pl-c1">=</span> <span class="pl-s">'userId'</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-k">return</span> <span class="pl-k">async</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">,</span> <span class="pl-s1">next</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+    <span class="pl-k">const</span> <span class="pl-s1">resource</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">resourceModel</span><span class="pl-kos">.</span><span class="pl-en">findById</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">params</span><span class="pl-kos">.</span><span class="pl-c1">id</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    
+    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">resource</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+      <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">404</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Resource not found'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
+    
+    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">resource</span><span class="pl-kos">[</span><span class="pl-s1">userIdField</span><span class="pl-kos">]</span> <span class="pl-c1">!==</span> <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">user</span><span class="pl-kos">.</span><span class="pl-c1">id</span> <span class="pl-c1">&amp;&amp;</span> <span class="pl-c1">!</span><span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">user</span><span class="pl-kos">.</span><span class="pl-c1">isAdmin</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+      <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">403</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Access denied'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
+    
+    <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">resource</span> <span class="pl-c1">=</span> <span class="pl-s1">resource</span><span class="pl-kos">;</span>
+    <span class="pl-s1">next</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 使用中間件</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">(</span><span class="pl-s">'/api/orders/:id'</span><span class="pl-kos">,</span> 
+  <span class="pl-s1">authenticateUser</span><span class="pl-kos">,</span> 
+  <span class="pl-en">checkResourceOwnership</span><span class="pl-kos">(</span><span class="pl-v">Order</span><span class="pl-kos">)</span><span class="pl-kos">,</span>
+  <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+    <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">resource</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<h4>部署階段防禦</h4>
+<ol>
+<li>
+<p><strong>定期權限審計</strong></p>
+<ul>
+<li>審查用戶權限分配</li>
+<li>識別異常存取行為</li>
+</ul>
+</li>
+<li>
+<p><strong>監控與告警</strong></p>
+<ul>
+<li>監控權限失敗的嘗試</li>
+<li>設定異常存取告警</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>4. A02:2025 – Security Misconfiguration（安全設定錯誤）</h2>
+<h3>4.1 漏洞概述</h3>
+<p><strong>定義：</strong> 安全設定錯誤是指應用程式、框架、伺服器或雲端服務的設定不當，導致安全漏洞。</p>
+<p><strong>嚴重程度：</strong> Medium（中）</p>
+<p><strong>影響範圍：</strong></p>
+<ul>
+<li>未授權存取</li>
+<li>資訊洩露</li>
+<li>系統被入侵</li>
+</ul>
+<h3>4.2 攻擊原理</h3>
+<p>常見的安全設定錯誤：</p>
+<ol>
+<li>
+<p><strong>預設帳號與密碼</strong></p>
+<ul>
+<li>使用預設的管理員帳號</li>
+<li>使用弱密碼</li>
+</ul>
+</li>
+<li>
+<p><strong>錯誤訊息洩露</strong></p>
+<ul>
+<li>詳細的錯誤訊息洩露系統資訊</li>
+<li>Stack trace 暴露程式碼結構</li>
+</ul>
+</li>
+<li>
+<p><strong>不必要的功能啟用</strong></p>
+<ul>
+<li>啟用除錯模式</li>
+<li>啟用不必要的服務</li>
+</ul>
+</li>
+<li>
+<p><strong>HTTP headers 設定不當</strong></p>
+<ul>
+<li>缺少安全 headers</li>
+<li>暴露伺服器資訊</li>
+</ul>
+</li>
+</ol>
+<h3>4.3 實際案例</h3>
+<p><strong>案例 1：預設管理員帳號</strong></p>
+<p>某系統使用預設的管理員帳號 <code class="notranslate">admin/admin</code>，攻擊者可以輕易登入系統。</p>
+<p><strong>案例 2：錯誤訊息洩露</strong></p>
+<p>某 API 的錯誤訊息：</p>
+<pre class="notranslate"><code class="notranslate">Error: Database connection failed. MySQL user 'app_user'@'localhost' access denied.
+</code></pre>
+<p>洩露了資料庫用戶名稱與主機資訊。</p>
+<h3>4.4 防禦最佳實踐</h3>
+<h4>設計階段防禦</h4>
+<ol>
+<li><strong>安全配置基準</strong>
+<ul>
+<li>定義安全配置標準</li>
+<li>建立配置檢查清單</li>
+</ul>
+</li>
+</ol>
+<h4>開發階段防禦</h4>
+<ol>
+<li>
+<p><strong>移除預設帳號</strong></p>
+<ul>
+<li>更改所有預設帳號與密碼</li>
+<li>強制首次登入更改密碼</li>
+</ul>
+</li>
+<li>
+<p><strong>設定安全 headers</strong></p>
+<ul>
+<li>Content-Security-Policy</li>
+<li>X-Frame-Options</li>
+<li>X-Content-Type-Options</li>
+<li>Strict-Transport-Security</li>
+</ul>
+</li>
+</ol>
+<h4>程式碼範例</h4>
+<p><strong>設定安全 headers：</strong></p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">helmet</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'helmet'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-s1">helmet</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 或手動設定</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">,</span> <span class="pl-s1">next</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">setHeader</span><span class="pl-kos">(</span><span class="pl-s">'X-Content-Type-Options'</span><span class="pl-kos">,</span> <span class="pl-s">'nosniff'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">setHeader</span><span class="pl-kos">(</span><span class="pl-s">'X-Frame-Options'</span><span class="pl-kos">,</span> <span class="pl-s">'DENY'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">setHeader</span><span class="pl-kos">(</span><span class="pl-s">'X-XSS-Protection'</span><span class="pl-kos">,</span> <span class="pl-s">'1; mode=block'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">setHeader</span><span class="pl-kos">(</span><span class="pl-s">'Strict-Transport-Security'</span><span class="pl-kos">,</span> <span class="pl-s">'max-age=31536000; includeSubDomains'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">next</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p><strong>錯誤處理：</strong></p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 不安全的錯誤處理</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">,</span> <span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">,</span> <span class="pl-s1">next</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">500</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">error</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">message</span><span class="pl-kos">,</span>  <span class="pl-c">// 洩露詳細錯誤資訊</span>
+    <span class="pl-c1">stack</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">stack</span>    <span class="pl-c">// 洩露堆疊追蹤</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 安全的錯誤處理</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">,</span> <span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">,</span> <span class="pl-s1">next</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">error</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">;</span>  <span class="pl-c">// 記錄詳細錯誤到日誌</span>
+  
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">500</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">error</span>: <span class="pl-s">'An error occurred'</span>  <span class="pl-c">// 通用錯誤訊息</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<h4>部署階段防禦</h4>
+<ol>
+<li>
+<p><strong>配置審查</strong></p>
+<ul>
+<li>定期審查配置</li>
+<li>使用配置掃描工具</li>
+</ul>
+</li>
+<li>
+<p><strong>自動化配置管理</strong></p>
+<ul>
+<li>使用 Infrastructure as Code</li>
+<li>版本控制配置檔案</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>5. A03:2025 – Software Supply Chain Failures（軟體供應鏈失敗）</h2>
+<h3>5.1 漏洞概述</h3>
+<p><strong>定義：</strong> 軟體供應鏈失敗是指應用程式使用易受攻擊或過時的元件（函式庫、框架、相依套件），或從不安全的來源取得軟體，導致安全漏洞。</p>
+<p><strong>嚴重程度：</strong> High（高）</p>
+<p><strong>影響範圍：</strong></p>
+<ul>
+<li>已知漏洞被利用</li>
+<li>系統被入侵</li>
+<li>資料外洩</li>
+<li>供應鏈攻擊</li>
+</ul>
+<h3>5.2 攻擊原理</h3>
+<p>常見的供應鏈安全問題：</p>
+<ol>
+<li>
+<p><strong>未更新相依套件</strong></p>
+<ul>
+<li>使用舊版本函式庫</li>
+<li>未修補已知漏洞</li>
+</ul>
+</li>
+<li>
+<p><strong>未監控相依套件</strong></p>
+<ul>
+<li>不知道使用的元件版本</li>
+<li>不知道是否有漏洞</li>
+</ul>
+</li>
+<li>
+<p><strong>供應鏈攻擊</strong></p>
+<ul>
+<li>惡意套件被安裝</li>
+<li>合法套件被植入後門</li>
+<li>開源專案被惡意修改</li>
+</ul>
+</li>
+<li>
+<p><strong>不安全的來源</strong></p>
+<ul>
+<li>從未驗證的來源下載軟體</li>
+<li>使用未簽章的套件</li>
+</ul>
+</li>
+</ol>
+<h3>5.3 實際案例</h3>
+<p><strong>案例 1：Log4j 漏洞（<a title="CVE-2021-44228" data-hovercard-type="advisory" data-hovercard-url="/advisories/GHSA-jfh8-c2jp-5v3q/hovercard" href="https://github.com/advisories/GHSA-jfh8-c2jp-5v3q">CVE-2021-44228</a>）</strong></p>
+<p>2021 年發現的 Log4j 遠端程式碼執行漏洞影響全球數百萬應用程式，攻擊者可以透過日誌訊息執行任意程式碼。這是一個典型的供應鏈漏洞，影響所有使用 Log4j 的應用程式。</p>
+<p><strong>案例 2：過時的 jQuery 版本</strong></p>
+<p>某網站使用過時的 jQuery 1.7.2（2012 年發布），存在多個已知 XSS 漏洞，攻擊者可以透過這些漏洞進行跨站腳本攻擊。</p>
+<p><strong>案例 3：惡意 npm 套件</strong></p>
+<p>攻擊者發布看似合法的 npm 套件，但實際上包含惡意程式碼，當開發者安裝這些套件時，惡意程式碼會被執行。</p>
+<h3>5.4 防禦最佳實踐</h3>
+<h4>開發階段防禦</h4>
+<ol>
+<li>
+<p><strong>相依套件管理</strong></p>
+<ul>
+<li>定期更新相依套件</li>
+<li>使用最新穩定版本</li>
+<li>移除未使用的套件</li>
+<li>使用鎖定檔案（如 package-lock.json）</li>
+</ul>
+</li>
+<li>
+<p><strong>漏洞掃描</strong></p>
+<ul>
+<li>整合漏洞掃描到 CI/CD</li>
+<li>自動化掃描與通知</li>
+<li>設定嚴重程度閾值</li>
+</ul>
+</li>
+<li>
+<p><strong>來源驗證</strong></p>
+<ul>
+<li>只從可信來源下載套件</li>
+<li>驗證套件簽章</li>
+<li>檢查套件完整性</li>
+</ul>
+</li>
+</ol>
+<h4>程式碼範例</h4>
+<p><strong>使用 npm audit：</strong></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 掃描漏洞</span>
+npm audit
+
+<span class="pl-c"><span class="pl-c">#</span> 自動修復</span>
+npm audit fix
+
+<span class="pl-c"><span class="pl-c">#</span> 強制修復（可能破壞相容性）</span>
+npm audit fix --force</pre></div>
+<p><strong>使用 Snyk：</strong></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 安裝 Snyk</span>
+npm install -g snyk
+
+<span class="pl-c"><span class="pl-c">#</span> 掃描專案</span>
+snyk <span class="pl-c1">test</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 監控專案</span>
+snyk monitor</pre></div>
+<p><strong>CI/CD 整合：</strong></p>
+<div class="highlight highlight-source-yaml"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> GitHub Actions 範例</span>
+- <span class="pl-ent">name</span>: <span class="pl-s">Run security audit</span>
+  <span class="pl-ent">run</span>: <span class="pl-s">|</span>
+<span class="pl-s">    npm audit --audit-level=high</span>
+<span class="pl-s">    snyk test --severity-threshold=high</span></pre></div>
+<p><strong>使用 SBOM（Software Bill of Materials）：</strong></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 產生 SBOM</span>
+npm list --json <span class="pl-k">&gt;</span> sbom.json
+
+<span class="pl-c"><span class="pl-c">#</span> 使用工具分析 SBOM</span>
+cyclonedx-bom -o sbom.xml</pre></div>
+<h4>部署階段防禦</h4>
+<ol>
+<li>
+<p><strong>持續監控</strong></p>
+<ul>
+<li>監控相依套件漏洞</li>
+<li>設定自動化告警</li>
+<li>追蹤 CVE 資料庫</li>
+</ul>
+</li>
+<li>
+<p><strong>應急計畫</strong></p>
+<ul>
+<li>建立漏洞應急流程</li>
+<li>準備快速修復機制</li>
+<li>建立回滾流程</li>
+</ul>
+</li>
+<li>
+<p><strong>供應鏈安全</strong></p>
+<ul>
+<li>審查第三方供應商</li>
+<li>實施供應鏈安全標準</li>
+<li>使用軟體組成分析（SCA）工具</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>6. A04:2025 – Cryptographic Failures（加密機制失效）</h2>
+<h3>6.1 漏洞概述</h3>
+<p><strong>定義：</strong> 加密機制失效是指應用程式未能正確保護敏感資料，導致資料在傳輸或儲存過程中被暴露。</p>
+<p><strong>嚴重程度：</strong> High（高）</p>
+<p><strong>影響範圍：</strong></p>
+<ul>
+<li>敏感資料外洩（密碼、信用卡號、個人資料）</li>
+<li>資料完整性受損</li>
+<li>合規違規（PCI DSS、GDPR）</li>
+</ul>
+<h3>6.2 攻擊原理</h3>
+<p>加密機制失效的常見原因：</p>
+<ol>
+<li>
+<p><strong>傳輸層未加密</strong></p>
+<ul>
+<li>使用 HTTP 而非 HTTPS</li>
+<li>弱加密演算法（如 SSL 2.0、SSL 3.0）</li>
+</ul>
+</li>
+<li>
+<p><strong>儲存層未加密</strong></p>
+<ul>
+<li>敏感資料以明文儲存</li>
+<li>使用弱加密演算法</li>
+</ul>
+</li>
+<li>
+<p><strong>金鑰管理不當</strong></p>
+<ul>
+<li>金鑰硬編碼在程式碼中</li>
+<li>金鑰儲存在不安全的位置</li>
+<li>金鑰未定期輪換</li>
+</ul>
+</li>
+<li>
+<p><strong>加密實作錯誤</strong></p>
+<ul>
+<li>使用已棄用的加密演算法</li>
+<li>加密強度不足</li>
+<li>初始化向量（IV）重複使用</li>
+</ul>
+</li>
+</ol>
+<h3>6.3 實際案例</h3>
+<p><strong>案例 1：密碼明文儲存</strong></p>
+<p>某網站將用戶密碼以明文儲存在資料庫中，資料庫被入侵後，所有用戶密碼外洩。</p>
+<p><strong>案例 2：HTTP 傳輸敏感資料</strong></p>
+<p>某 API 使用 HTTP 傳輸用戶的信用卡資訊，攻擊者透過中間人攻擊（MITM）截取資料。</p>
+<p><strong>案例 3：弱加密演算法</strong></p>
+<p>某應用程式使用 MD5 雜湊密碼，MD5 已被破解，攻擊者可以快速破解密碼。</p>
+<h3>6.4 防禦最佳實踐</h3>
+<h4>設計階段防禦</h4>
+<ol>
+<li>
+<p><strong>資料分類</strong></p>
+<ul>
+<li>識別敏感資料</li>
+<li>定義資料保護等級</li>
+</ul>
+</li>
+<li>
+<p><strong>加密策略</strong></p>
+<ul>
+<li>選擇強加密演算法</li>
+<li>定義金鑰管理策略</li>
+</ul>
+</li>
+</ol>
+<h4>開發階段防禦</h4>
+<ol>
+<li>
+<p><strong>使用 HTTPS</strong></p>
+<ul>
+<li>強制所有連線使用 HTTPS</li>
+<li>設定 HSTS（HTTP Strict Transport Security）</li>
+</ul>
+</li>
+<li>
+<p><strong>密碼雜湊</strong></p>
+<ul>
+<li>使用 bcrypt、Argon2 或 PBKDF2</li>
+<li>加入 salt（鹽值）</li>
+<li>避免使用 MD5、SHA1</li>
+</ul>
+</li>
+<li>
+<p><strong>敏感資料加密</strong></p>
+<ul>
+<li>加密儲存的敏感資料</li>
+<li>使用 AES-256 等強加密演算法</li>
+</ul>
+</li>
+</ol>
+<h4>程式碼範例</h4>
+<p><strong>不安全的實作：</strong></p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 危險：密碼明文儲存</span>
+<span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-kos">{</span>
+  <span class="pl-c1">username</span>: <span class="pl-s">'john'</span><span class="pl-kos">,</span>
+  <span class="pl-c1">password</span>: <span class="pl-s">'password123'</span>  <span class="pl-c">// 明文密碼</span>
+<span class="pl-kos">}</span><span class="pl-kos">;</span>
+<span class="pl-k">await</span> <span class="pl-s1">db</span><span class="pl-kos">.</span><span class="pl-c1">users</span><span class="pl-kos">.</span><span class="pl-en">insert</span><span class="pl-kos">(</span><span class="pl-s1">user</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p><strong>安全的實作：</strong></p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">bcrypt</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'bcrypt'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 安全：使用 bcrypt 雜湊密碼</span>
+<span class="pl-c">// saltRounds (cost factor) 建議值：10-12</span>
+<span class="pl-c">// 10 = 快速但較不安全，12 = 較慢但更安全</span>
+<span class="pl-c">// 根據硬體效能選擇，一般建議使用 10-11</span>
+<span class="pl-k">const</span> <span class="pl-s1">saltRounds</span> <span class="pl-c1">=</span> <span class="pl-c1">10</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">hashedPassword</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">bcrypt</span><span class="pl-kos">.</span><span class="pl-en">hash</span><span class="pl-kos">(</span><span class="pl-s1">password</span><span class="pl-kos">,</span> <span class="pl-s1">saltRounds</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-kos">{</span>
+  <span class="pl-c1">username</span>: <span class="pl-s">'john'</span><span class="pl-kos">,</span>
+  <span class="pl-c1">password</span>: <span class="pl-s1">hashedPassword</span>  <span class="pl-c">// 雜湊後的密碼</span>
+<span class="pl-kos">}</span><span class="pl-kos">;</span>
+<span class="pl-k">await</span> <span class="pl-s1">db</span><span class="pl-kos">.</span><span class="pl-c1">users</span><span class="pl-kos">.</span><span class="pl-en">insert</span><span class="pl-kos">(</span><span class="pl-s1">user</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 驗證密碼</span>
+<span class="pl-k">const</span> <span class="pl-s1">isValid</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">bcrypt</span><span class="pl-kos">.</span><span class="pl-en">compare</span><span class="pl-kos">(</span><span class="pl-s1">inputPassword</span><span class="pl-kos">,</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">password</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p><strong>敏感資料加密：</strong></p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">crypto</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'crypto'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 加密敏感資料</span>
+<span class="pl-c">// 注意：key 應該是 32 bytes (256 bits) 的 Buffer</span>
+<span class="pl-c">// 實際應用中應使用金鑰管理服務（KMS）而非硬編碼</span>
+<span class="pl-k">function</span> <span class="pl-en">encrypt</span><span class="pl-kos">(</span><span class="pl-s1">text</span><span class="pl-kos">,</span> <span class="pl-s1">key</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-c">// 產生隨機 IV（初始化向量）</span>
+  <span class="pl-c">// IV 必須是隨機的，且不需要保密，但每次加密都應該不同</span>
+  <span class="pl-k">const</span> <span class="pl-s1">iv</span> <span class="pl-c1">=</span> <span class="pl-s1">crypto</span><span class="pl-kos">.</span><span class="pl-en">randomBytes</span><span class="pl-kos">(</span><span class="pl-c1">16</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  
+  <span class="pl-c">// 使用 AES-256-CBC 加密</span>
+  <span class="pl-c">// createCipheriv 是正確的方法（createCipher 已棄用）</span>
+  <span class="pl-k">const</span> <span class="pl-s1">cipher</span> <span class="pl-c1">=</span> <span class="pl-s1">crypto</span><span class="pl-kos">.</span><span class="pl-en">createCipheriv</span><span class="pl-kos">(</span><span class="pl-s">'aes-256-cbc'</span><span class="pl-kos">,</span> <span class="pl-s1">key</span><span class="pl-kos">,</span> <span class="pl-s1">iv</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  
+  <span class="pl-k">let</span> <span class="pl-s1">encrypted</span> <span class="pl-c1">=</span> <span class="pl-s1">cipher</span><span class="pl-kos">.</span><span class="pl-en">update</span><span class="pl-kos">(</span><span class="pl-s1">text</span><span class="pl-kos">,</span> <span class="pl-s">'utf8'</span><span class="pl-kos">,</span> <span class="pl-s">'hex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">encrypted</span> <span class="pl-c1">+=</span> <span class="pl-s1">cipher</span><span class="pl-kos">.</span><span class="pl-en">final</span><span class="pl-kos">(</span><span class="pl-s">'hex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  
+  <span class="pl-c">// 將 IV 與加密資料一起儲存（IV 不需要保密）</span>
+  <span class="pl-k">return</span> <span class="pl-s1">iv</span><span class="pl-kos">.</span><span class="pl-en">toString</span><span class="pl-kos">(</span><span class="pl-s">'hex'</span><span class="pl-kos">)</span> <span class="pl-c1">+</span> <span class="pl-s">':'</span> <span class="pl-c1">+</span> <span class="pl-s1">encrypted</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-c">// 解密敏感資料</span>
+<span class="pl-k">function</span> <span class="pl-en">decrypt</span><span class="pl-kos">(</span><span class="pl-s1">encryptedText</span><span class="pl-kos">,</span> <span class="pl-s1">key</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-k">const</span> <span class="pl-s1">parts</span> <span class="pl-c1">=</span> <span class="pl-s1">encryptedText</span><span class="pl-kos">.</span><span class="pl-en">split</span><span class="pl-kos">(</span><span class="pl-s">':'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-k">const</span> <span class="pl-s1">iv</span> <span class="pl-c1">=</span> <span class="pl-v">Buffer</span><span class="pl-kos">.</span><span class="pl-en">from</span><span class="pl-kos">(</span><span class="pl-s1">parts</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">,</span> <span class="pl-s">'hex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-k">const</span> <span class="pl-s1">encrypted</span> <span class="pl-c1">=</span> <span class="pl-s1">parts</span><span class="pl-kos">[</span><span class="pl-c1">1</span><span class="pl-kos">]</span><span class="pl-kos">;</span>
+  
+  <span class="pl-k">const</span> <span class="pl-s1">decipher</span> <span class="pl-c1">=</span> <span class="pl-s1">crypto</span><span class="pl-kos">.</span><span class="pl-en">createDecipheriv</span><span class="pl-kos">(</span><span class="pl-s">'aes-256-cbc'</span><span class="pl-kos">,</span> <span class="pl-s1">key</span><span class="pl-kos">,</span> <span class="pl-s1">iv</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-k">let</span> <span class="pl-s1">decrypted</span> <span class="pl-c1">=</span> <span class="pl-s1">decipher</span><span class="pl-kos">.</span><span class="pl-en">update</span><span class="pl-kos">(</span><span class="pl-s1">encrypted</span><span class="pl-kos">,</span> <span class="pl-s">'hex'</span><span class="pl-kos">,</span> <span class="pl-s">'utf8'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">decrypted</span> <span class="pl-c1">+=</span> <span class="pl-s1">decipher</span><span class="pl-kos">.</span><span class="pl-en">final</span><span class="pl-kos">(</span><span class="pl-s">'utf8'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  
+  <span class="pl-k">return</span> <span class="pl-s1">decrypted</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-c">// 實際使用範例（使用環境變數或 KMS）</span>
+<span class="pl-c">// const key = Buffer.from(process.env.ENCRYPTION_KEY, 'hex'); // 32 bytes</span>
+<span class="pl-c">// const encrypted = encrypt('sensitive data', key);</span></pre></div>
+<h4>部署階段防禦</h4>
+<ol>
+<li>
+<p><strong>強制 HTTPS</strong></p>
+<ul>
+<li>設定 HTTP 自動重導向到 HTTPS</li>
+<li>設定 HSTS header</li>
+</ul>
+</li>
+<li>
+<p><strong>金鑰管理</strong></p>
+<ul>
+<li>使用金鑰管理服務（如 AWS KMS、Azure Key Vault）</li>
+<li>定期輪換金鑰</li>
+<li>安全儲存金鑰</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>7. A05:2025 – Injection（注入攻擊）</h2>
+<h3>7.1 漏洞概述</h3>
+<p><strong>定義：</strong> 注入攻擊是指攻擊者將惡意資料注入應用程式，導致應用程式執行非預期的指令或查詢。</p>
+<p><strong>嚴重程度：</strong> Critical（嚴重）</p>
+<p><strong>影響範圍：</strong></p>
+<ul>
+<li>資料庫資料外洩</li>
+<li>系統命令執行</li>
+<li>應用程式完整性受損</li>
+</ul>
+<h3>7.2 攻擊原理</h3>
+<p>注入攻擊的常見類型：</p>
+<ol>
+<li>
+<p><strong>SQL Injection（SQL 注入）</strong></p>
+<ul>
+<li>在 SQL 查詢中注入惡意 SQL 程式碼</li>
+<li>可能導致資料外洩、資料篡改、資料刪除</li>
+</ul>
+</li>
+<li>
+<p><strong>NoSQL Injection（NoSQL 注入）</strong></p>
+<ul>
+<li>在 NoSQL 查詢中注入惡意程式碼</li>
+<li>影響 MongoDB、CouchDB 等資料庫</li>
+</ul>
+</li>
+<li>
+<p><strong>Command Injection（命令注入）</strong></p>
+<ul>
+<li>在系統命令中注入惡意指令</li>
+<li>可能導致系統被完全控制</li>
+</ul>
+</li>
+<li>
+<p><strong>LDAP Injection（LDAP 注入）</strong></p>
+<ul>
+<li>在 LDAP 查詢中注入惡意程式碼</li>
+<li>影響目錄服務</li>
+</ul>
+</li>
+</ol>
+<h3>7.3 實際案例</h3>
+<p><strong>案例 1：SQL Injection 導致資料外洩</strong></p>
+<p>某登入頁面的 SQL 查詢：</p>
+<div class="highlight highlight-source-sql"><pre class="notranslate"><span class="pl-k">SELECT</span> <span class="pl-k">*</span> <span class="pl-k">FROM</span> users <span class="pl-k">WHERE</span> username <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>$username<span class="pl-pds">'</span></span> <span class="pl-k">AND</span> password <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>$password<span class="pl-pds">'</span></span></pre></div>
+<p>攻擊者輸入：</p>
+<pre class="notranslate"><code class="notranslate">Username: admin'--
+Password: anything
+</code></pre>
+<p>實際執行的 SQL：</p>
+<div class="highlight highlight-source-sql"><pre class="notranslate"><span class="pl-k">SELECT</span> <span class="pl-k">*</span> <span class="pl-k">FROM</span> users <span class="pl-k">WHERE</span> username <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>admin<span class="pl-pds">'</span></span><span class="pl-c"><span class="pl-c">--</span>' AND password = 'anything'</span></pre></div>
+<p>結果：攻擊者成功以管理員身份登入。</p>
+<p><strong>案例 2：SQL Injection 導致資料刪除</strong></p>
+<p>攻擊者輸入：</p>
+<pre class="notranslate"><code class="notranslate">Username: admin'; DROP TABLE users;--
+</code></pre>
+<p>可能導致整個用戶表被刪除。</p>
+<h3>7.4 防禦最佳實踐</h3>
+<h4>設計階段防禦</h4>
+<ol>
+<li>
+<p><strong>輸入驗證</strong></p>
+<ul>
+<li>定義輸入格式與範圍</li>
+<li>實施白名單驗證</li>
+</ul>
+</li>
+<li>
+<p><strong>輸出編碼</strong></p>
+<ul>
+<li>對輸出進行適當編碼</li>
+<li>防止 XSS 攻擊</li>
+</ul>
+</li>
+</ol>
+<h4>開發階段防禦</h4>
+<ol>
+<li>
+<p><strong>參數化查詢（Prepared Statements）</strong></p>
+<ul>
+<li>使用參數化查詢而非字串拼接</li>
+<li>讓資料庫區分資料與指令</li>
+</ul>
+</li>
+<li>
+<p><strong>輸入驗證與清理</strong></p>
+<ul>
+<li>驗證所有輸入</li>
+<li>清理特殊字元</li>
+</ul>
+</li>
+</ol>
+<h4>程式碼範例</h4>
+<p><strong>不安全的實作：</strong></p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 危險：字串拼接 SQL 查詢</span>
+<span class="pl-k">const</span> <span class="pl-s1">query</span> <span class="pl-c1">=</span> <span class="pl-s">`SELECT * FROM users WHERE username = '<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">username</span><span class="pl-kos">}</span></span>' AND password = '<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">password</span><span class="pl-kos">}</span></span>'`</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">db</span><span class="pl-kos">.</span><span class="pl-en">query</span><span class="pl-kos">(</span><span class="pl-s1">query</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p><strong>安全的實作：</strong></p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 安全：使用參數化查詢</span>
+<span class="pl-k">const</span> <span class="pl-s1">query</span> <span class="pl-c1">=</span> <span class="pl-s">'SELECT * FROM users WHERE username = ? AND password = ?'</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">db</span><span class="pl-kos">.</span><span class="pl-en">query</span><span class="pl-kos">(</span><span class="pl-s1">query</span><span class="pl-kos">,</span> <span class="pl-kos">[</span><span class="pl-s1">username</span><span class="pl-kos">,</span> <span class="pl-s1">password</span><span class="pl-kos">]</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p><strong>使用 ORM：</strong></p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 使用 Sequelize ORM（自動防止 SQL Injection）</span>
+<span class="pl-c">// ORM 會自動使用參數化查詢，防止 SQL Injection</span>
+<span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">User</span><span class="pl-kos">.</span><span class="pl-en">findOne</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+  <span class="pl-c1">where</span>: <span class="pl-kos">{</span>
+    <span class="pl-c1">username</span>: <span class="pl-s1">username</span><span class="pl-kos">,</span>
+    <span class="pl-c1">password</span>: <span class="pl-s1">password</span>  <span class="pl-c">// 注意：實際應用中應先雜湊密碼再查詢</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 更好的做法：先雜湊密碼再查詢</span>
+<span class="pl-k">const</span> <span class="pl-s1">hashedPassword</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">bcrypt</span><span class="pl-kos">.</span><span class="pl-en">hash</span><span class="pl-kos">(</span><span class="pl-s1">password</span><span class="pl-kos">,</span> <span class="pl-c1">10</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">User</span><span class="pl-kos">.</span><span class="pl-en">findOne</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+  <span class="pl-c1">where</span>: <span class="pl-kos">{</span>
+    <span class="pl-c1">username</span>: <span class="pl-s1">username</span><span class="pl-kos">,</span>
+    <span class="pl-c1">password</span>: <span class="pl-s1">hashedPassword</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p><strong>輸入驗證：</strong></p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">validator</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'validator'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 驗證輸入</span>
+<span class="pl-k">function</span> <span class="pl-en">validateInput</span><span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-c">// 移除特殊字元</span>
+  <span class="pl-k">const</span> <span class="pl-s1">cleaned</span> <span class="pl-c1">=</span> <span class="pl-s1">validator</span><span class="pl-kos">.</span><span class="pl-en">escape</span><span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  
+  <span class="pl-c">// 驗證格式</span>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">validator</span><span class="pl-kos">.</span><span class="pl-en">isAlphanumeric</span><span class="pl-kos">(</span><span class="pl-s1">cleaned</span><span class="pl-kos">)</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-v">Error</span><span class="pl-kos">(</span><span class="pl-s">'Invalid input format'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+  
+  <span class="pl-k">return</span> <span class="pl-s1">cleaned</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span></pre></div>
+<h4>部署階段防禦</h4>
+<ol>
+<li>
+<p><strong>Web Application Firewall (WAF)</strong></p>
+<ul>
+<li>部署 WAF 阻擋注入攻擊</li>
+<li>設定規則偵測異常請求</li>
+</ul>
+</li>
+<li>
+<p><strong>最小權限原則</strong></p>
+<ul>
+<li>資料庫用戶使用最小權限</li>
+<li>避免使用管理員權限</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>8. A06:2025 – Insecure Design（不安全設計）</h2>
+<h3>8.1 漏洞概述</h3>
+<p><strong>定義：</strong> 不安全設計是指應用程式在設計階段就存在安全缺陷，這些缺陷無法透過實作或配置來修復。</p>
+<p><strong>嚴重程度：</strong> High（高）</p>
+<p><strong>影響範圍：</strong></p>
+<ul>
+<li>架構層級的安全漏洞</li>
+<li>業務邏輯缺陷</li>
+<li>系統性安全問題</li>
+</ul>
+<h3>8.2 攻擊原理</h3>
+<p>不安全設計的常見問題：</p>
+<ol>
+<li>
+<p><strong>缺乏威脅建模</strong></p>
+<ul>
+<li>未識別潛在威脅</li>
+<li>未設計防禦機制</li>
+</ul>
+</li>
+<li>
+<p><strong>業務邏輯缺陷</strong></p>
+<ul>
+<li>流程設計不當</li>
+<li>缺乏必要的驗證步驟</li>
+</ul>
+</li>
+<li>
+<p><strong>預設不安全</strong></p>
+<ul>
+<li>預設配置不安全</li>
+<li>缺乏安全預設值</li>
+</ul>
+</li>
+</ol>
+<h3>8.3 實際案例</h3>
+<p><strong>案例 1：密碼重置流程缺陷</strong></p>
+<p>某網站的密碼重置流程：</p>
+<ol>
+<li>用戶輸入 email</li>
+<li>系統發送重置連結到 email</li>
+<li>用戶點擊連結重置密碼</li>
+</ol>
+<p>問題：重置連結沒有過期時間，且可以重複使用，攻擊者一旦取得連結即可重置密碼。</p>
+<p><strong>案例 2：支付流程缺陷</strong></p>
+<p>某電商網站的支付流程允許用戶在未完成支付的情況下修改訂單金額，導致價格操縱。</p>
+<h3>8.4 防禦最佳實踐</h3>
+<h4>設計階段防禦</h4>
+<ol>
+<li>
+<p><strong>威脅建模</strong></p>
+<ul>
+<li>識別威脅與攻擊向量</li>
+<li>設計防禦機制</li>
+</ul>
+</li>
+<li>
+<p><strong>安全設計原則</strong></p>
+<ul>
+<li>最小權限原則</li>
+<li>深度防禦</li>
+<li>預設安全</li>
+</ul>
+</li>
+</ol>
+<h4>開發階段防禦</h4>
+<ol>
+<li>
+<p><strong>業務邏輯驗證</strong></p>
+<ul>
+<li>驗證業務流程</li>
+<li>實施必要的檢查</li>
+</ul>
+</li>
+<li>
+<p><strong>安全預設值</strong></p>
+<ul>
+<li>設定安全的預設配置</li>
+<li>避免不安全的預設行為</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>9. A07:2025 – Authentication Failures（身份驗證失敗）</h2>
+<h3>9.1 漏洞概述</h3>
+<p><strong>定義：</strong> 應用程式的身份識別與驗證機制存在缺陷，導致未授權存取。</p>
+<p><strong>嚴重程度：</strong> High（高）</p>
+<p><strong>影響範圍：</strong></p>
+<ul>
+<li>帳號被盜用</li>
+<li>未授權存取</li>
+<li>身份冒充</li>
+</ul>
+<h3>9.2 攻擊原理</h3>
+<p>常見問題：</p>
+<ol>
+<li>
+<p><strong>弱密碼政策</strong></p>
+<ul>
+<li>允許弱密碼</li>
+<li>無密碼複雜度要求</li>
+</ul>
+</li>
+<li>
+<p><strong>密碼重置缺陷</strong></p>
+<ul>
+<li>重置流程不安全</li>
+<li>重置連結可預測</li>
+</ul>
+</li>
+<li>
+<p><strong>會話管理缺陷</strong></p>
+<ul>
+<li>會話 ID 可預測</li>
+<li>會話未正確失效</li>
+</ul>
+</li>
+<li>
+<p><strong>多因素驗證缺失</strong></p>
+<ul>
+<li>僅依賴密碼</li>
+<li>無額外驗證機制</li>
+</ul>
+</li>
+</ol>
+<h3>9.3 實際案例</h3>
+<p><strong>案例 1：弱密碼政策</strong></p>
+<p>某網站允許用戶使用 <code class="notranslate">123456</code> 作為密碼，攻擊者可以輕易破解帳號。</p>
+<p><strong>案例 2：會話固定攻擊</strong></p>
+<p>某網站的會話 ID 在登入前後不變，攻擊者可以誘導用戶使用預設的會話 ID，然後接管會話。</p>
+<h3>9.4 防禦最佳實踐</h3>
+<h4>設計階段防禦</h4>
+<ol>
+<li>
+<p><strong>密碼政策</strong></p>
+<ul>
+<li>定義密碼複雜度要求</li>
+<li>實施密碼歷史政策</li>
+</ul>
+</li>
+<li>
+<p><strong>會話管理策略</strong></p>
+<ul>
+<li>定義會話超時時間</li>
+<li>定義會話失效條件</li>
+</ul>
+</li>
+</ol>
+<h4>開發階段防禦</h4>
+<ol>
+<li><strong>強密碼政策</strong></li>
+</ol>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">passwordValidator</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'password-validator'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-k">const</span> <span class="pl-s1">schema</span> <span class="pl-c1">=</span> <span class="pl-k">new</span> <span class="pl-s1">passwordValidator</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+  <span class="pl-kos">.</span><span class="pl-en">is</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">min</span><span class="pl-kos">(</span><span class="pl-c1">8</span><span class="pl-kos">)</span>                    <span class="pl-c">// 最少 8 字元</span>
+  <span class="pl-kos">.</span><span class="pl-en">is</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">max</span><span class="pl-kos">(</span><span class="pl-c1">100</span><span class="pl-kos">)</span>                  <span class="pl-c">// 最多 100 字元</span>
+  <span class="pl-kos">.</span><span class="pl-en">has</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">uppercase</span><span class="pl-kos">(</span><span class="pl-kos">)</span>              <span class="pl-c">// 必須有大寫字母</span>
+  <span class="pl-kos">.</span><span class="pl-en">has</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">lowercase</span><span class="pl-kos">(</span><span class="pl-kos">)</span>              <span class="pl-c">// 必須有小寫字母</span>
+  <span class="pl-kos">.</span><span class="pl-en">has</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">digits</span><span class="pl-kos">(</span><span class="pl-kos">)</span>                 <span class="pl-c">// 必須有數字</span>
+  <span class="pl-kos">.</span><span class="pl-en">has</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">symbols</span><span class="pl-kos">(</span><span class="pl-kos">)</span>                <span class="pl-c">// 必須有特殊字元</span>
+  <span class="pl-kos">.</span><span class="pl-en">has</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">not</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">spaces</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>          <span class="pl-c">// 不能有空格</span>
+
+<span class="pl-k">function</span> <span class="pl-en">validatePassword</span><span class="pl-kos">(</span><span class="pl-s1">password</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-k">return</span> <span class="pl-s1">schema</span><span class="pl-kos">.</span><span class="pl-en">validate</span><span class="pl-kos">(</span><span class="pl-s1">password</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span></pre></div>
+<ol start="2">
+<li><strong>安全的會話管理</strong></li>
+</ol>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">session</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'express-session'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">crypto</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'crypto'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-s1">session</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+  <span class="pl-c1">secret</span>: <span class="pl-s1">crypto</span><span class="pl-kos">.</span><span class="pl-en">randomBytes</span><span class="pl-kos">(</span><span class="pl-c1">64</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toString</span><span class="pl-kos">(</span><span class="pl-s">'hex'</span><span class="pl-kos">)</span><span class="pl-kos">,</span>  <span class="pl-c">// 使用強隨機 secret</span>
+  <span class="pl-c1">resave</span>: <span class="pl-c1">false</span><span class="pl-kos">,</span>
+  <span class="pl-c1">saveUninitialized</span>: <span class="pl-c1">false</span><span class="pl-kos">,</span>
+  <span class="pl-c1">cookie</span>: <span class="pl-kos">{</span>
+    <span class="pl-c1">secure</span>: <span class="pl-c1">true</span><span class="pl-kos">,</span>        <span class="pl-c">// 僅 HTTPS</span>
+    <span class="pl-c1">httpOnly</span>: <span class="pl-c1">true</span><span class="pl-kos">,</span>      <span class="pl-c">// 防止 XSS</span>
+    <span class="pl-c1">maxAge</span>: <span class="pl-c1">30</span> <span class="pl-c1">*</span> <span class="pl-c1">60</span> <span class="pl-c1">*</span> <span class="pl-c1">1000</span><span class="pl-kos">,</span>  <span class="pl-c">// 30 分鐘</span>
+    <span class="pl-c1">sameSite</span>: <span class="pl-s">'strict'</span>  <span class="pl-c">// CSRF 防護</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 登入時重新產生會話 ID（防止會話固定攻擊）</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">post</span><span class="pl-kos">(</span><span class="pl-s">'/login'</span><span class="pl-kos">,</span> <span class="pl-k">async</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-k">try</span> <span class="pl-kos">{</span>
+    <span class="pl-c">// 驗證用戶憑證</span>
+    <span class="pl-k">const</span> <span class="pl-kos">{</span> username<span class="pl-kos">,</span> password <span class="pl-kos">}</span> <span class="pl-c1">=</span> <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">;</span>
+    <span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">User</span><span class="pl-kos">.</span><span class="pl-en">findOne</span><span class="pl-kos">(</span><span class="pl-kos">{</span> username <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    
+    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">user</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+      <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">401</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Invalid credentials'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
+    
+    <span class="pl-k">const</span> <span class="pl-s1">isValid</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">bcrypt</span><span class="pl-kos">.</span><span class="pl-en">compare</span><span class="pl-kos">(</span><span class="pl-s1">password</span><span class="pl-kos">,</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">password</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">isValid</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+      <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">401</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Invalid credentials'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
+    
+    <span class="pl-c">// 重新產生會話 ID（防止會話固定攻擊）</span>
+    <span class="pl-c">// 這確保攻擊者無法預先設定會話 ID</span>
+    <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">session</span><span class="pl-kos">.</span><span class="pl-en">regenerate</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+      <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">500</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Login failed'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+      <span class="pl-kos">}</span>
+      
+      <span class="pl-c">// 設定會話資料</span>
+      <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">session</span><span class="pl-kos">.</span><span class="pl-c1">userId</span> <span class="pl-c1">=</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">id</span><span class="pl-kos">;</span>
+      <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">session</span><span class="pl-kos">.</span><span class="pl-c1">role</span> <span class="pl-c1">=</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">role</span><span class="pl-kos">;</span>
+      <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">session</span><span class="pl-kos">.</span><span class="pl-c1">loginTime</span> <span class="pl-c1">=</span> <span class="pl-v">Date</span><span class="pl-kos">.</span><span class="pl-en">now</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+      
+      <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">success</span>: <span class="pl-c1">true</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span> <span class="pl-k">catch</span> <span class="pl-kos">(</span><span class="pl-s1">error</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">error</span><span class="pl-kos">(</span><span class="pl-s">'Login error:'</span><span class="pl-kos">,</span> <span class="pl-s1">error</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">500</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Login failed'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<ol start="3">
+<li><strong>多因素驗證（MFA）</strong></li>
+</ol>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">speakeasy</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'speakeasy'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-v">QRCode</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'qrcode'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 產生 MFA secret</span>
+<span class="pl-k">function</span> <span class="pl-en">generateMFASecret</span><span class="pl-kos">(</span><span class="pl-s1">user</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-k">const</span> <span class="pl-s1">secret</span> <span class="pl-c1">=</span> <span class="pl-s1">speakeasy</span><span class="pl-kos">.</span><span class="pl-en">generateSecret</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">name</span>: <span class="pl-s">`Fenryx (<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">email</span><span class="pl-kos">}</span></span>)`</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  
+  <span class="pl-c">// 儲存 secret</span>
+  <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">mfaSecret</span> <span class="pl-c1">=</span> <span class="pl-s1">secret</span><span class="pl-kos">.</span><span class="pl-c1">base32</span><span class="pl-kos">;</span>
+  <span class="pl-k">await</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-en">save</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  
+  <span class="pl-k">return</span> <span class="pl-s1">secret</span><span class="pl-kos">.</span><span class="pl-c1">otpauth_url</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-c">// 驗證 MFA token</span>
+<span class="pl-k">function</span> <span class="pl-en">verifyMFAToken</span><span class="pl-kos">(</span><span class="pl-s1">user</span><span class="pl-kos">,</span> <span class="pl-s1">token</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-k">return</span> <span class="pl-s1">speakeasy</span><span class="pl-kos">.</span><span class="pl-c1">totp</span><span class="pl-kos">.</span><span class="pl-en">verify</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">secret</span>: <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">mfaSecret</span><span class="pl-kos">,</span>
+    <span class="pl-c1">encoding</span>: <span class="pl-s">'base32'</span><span class="pl-kos">,</span>
+    <span class="pl-c1">token</span>: <span class="pl-s1">token</span><span class="pl-kos">,</span>
+    <span class="pl-c1">window</span>: <span class="pl-c1">2</span>  <span class="pl-c">// 允許前後 2 個時間視窗</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span></pre></div>
+<h4>部署階段防禦</h4>
+<ol>
+<li>
+<p><strong>帳號鎖定機制</strong></p>
+<ul>
+<li>多次失敗登入後鎖定帳號</li>
+<li>實施 CAPTCHA</li>
+</ul>
+</li>
+<li>
+<p><strong>登入監控</strong></p>
+<ul>
+<li>監控異常登入行為</li>
+<li>設定告警機制</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>10. A08:2025 – Software or Data Integrity Failures（軟體或資料完整性失敗）</h2>
+<h3>10.1 漏洞概述</h3>
+<p><strong>定義：</strong> 應用程式未能保護軟體與資料的完整性，導致未授權的修改或破壞。</p>
+<p><strong>嚴重程度：</strong> High（高）</p>
+<p><strong>影響範圍：</strong></p>
+<ul>
+<li>軟體被篡改</li>
+<li>資料被修改</li>
+<li>供應鏈攻擊</li>
+</ul>
+<h3>10.2 攻擊原理</h3>
+<p>常見問題：</p>
+<ol>
+<li>
+<p><strong>CI/CD 管道不安全</strong></p>
+<ul>
+<li>未驗證建置來源</li>
+<li>未簽署建置產物</li>
+</ul>
+</li>
+<li>
+<p><strong>相依套件完整性</strong></p>
+<ul>
+<li>未驗證套件完整性</li>
+<li>使用未簽署的套件</li>
+</ul>
+</li>
+<li>
+<p><strong>資料完整性</strong></p>
+<ul>
+<li>未驗證資料完整性</li>
+<li>未實施資料簽章</li>
+</ul>
+</li>
+</ol>
+<h3>10.3 實際案例</h3>
+<p><strong>案例 1：供應鏈攻擊</strong></p>
+<p>2020 年 SolarWinds 攻擊事件，攻擊者入侵 CI/CD 管道，在軟體更新中植入後門，影響數千家企業。</p>
+<p><strong>案例 2：npm 惡意套件</strong></p>
+<p>攻擊者發布與合法套件名稱相似的惡意套件，開發者誤安裝後，惡意套件竊取敏感資訊。</p>
+<h3>10.4 防禦最佳實踐</h3>
+<h4>設計階段防禦</h4>
+<ol>
+<li><strong>供應鏈安全策略</strong>
+<ul>
+<li>定義套件來源政策</li>
+<li>定義簽章驗證要求</li>
+</ul>
+</li>
+</ol>
+<h4>開發階段防禦</h4>
+<ol>
+<li><strong>套件完整性驗證</strong></li>
+</ol>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 使用 npm 驗證套件完整性</span>
+npm ci --audit
+
+<span class="pl-c"><span class="pl-c">#</span> 使用 GPG 驗證套件簽章</span>
+gpg --verify package.tar.gz.asc package.tar.gz</pre></div>
+<ol start="2">
+<li><strong>CI/CD 安全</strong></li>
+</ol>
+<div class="highlight highlight-source-yaml"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> GitHub Actions 範例</span>
+- <span class="pl-ent">name</span>: <span class="pl-s">Verify build integrity</span>
+  <span class="pl-ent">run</span>: <span class="pl-s">|</span>
+<span class="pl-s">    # 驗證建置來源</span>
+<span class="pl-s">    # 簽署建置產物</span>
+<span class="pl-s">    gpg --sign build.tar.gz</span></pre></div>
+<h4>部署階段防禦</h4>
+<ol>
+<li>
+<p><strong>持續監控</strong></p>
+<ul>
+<li>監控相依套件變更</li>
+<li>監控建置流程</li>
+</ul>
+</li>
+<li>
+<p><strong>應急計畫</strong></p>
+<ul>
+<li>建立供應鏈攻擊應急流程</li>
+<li>準備快速修復機制</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>11. A09:2025 – Logging &amp; Alerting Failures（日誌與告警失敗）</h2>
+<h3>11.1 漏洞概述</h3>
+<p><strong>定義：</strong> 應用程式缺乏適當的安全日誌與監控機制，無法及時偵測與回應安全事件。</p>
+<p><strong>嚴重程度：</strong> Medium（中）</p>
+<p><strong>影響範圍：</strong></p>
+<ul>
+<li>無法偵測攻擊</li>
+<li>無法追蹤安全事件</li>
+<li>無法進行事件回應</li>
+</ul>
+<h3>11.2 攻擊原理</h3>
+<p>常見問題：</p>
+<ol>
+<li>
+<p><strong>日誌記錄不足</strong></p>
+<ul>
+<li>未記錄安全相關事件</li>
+<li>日誌資訊不完整</li>
+</ul>
+</li>
+<li>
+<p><strong>監控缺失</strong></p>
+<ul>
+<li>無即時監控機制</li>
+<li>無異常偵測</li>
+</ul>
+</li>
+<li>
+<p><strong>日誌管理不當</strong></p>
+<ul>
+<li>日誌未集中管理</li>
+<li>日誌未加密儲存</li>
+</ul>
+</li>
+</ol>
+<h3>11.3 實際案例</h3>
+<p><strong>案例 1：未偵測的資料外洩</strong></p>
+<p>某網站被攻擊者入侵並竊取資料，但由於缺乏日誌記錄，直到 6 個月後才發現。</p>
+<p><strong>案例 2：無法追蹤攻擊來源</strong></p>
+<p>某 API 遭受暴力破解攻擊，但由於未記錄 IP 位址，無法追蹤攻擊來源。</p>
+<h3>11.4 防禦最佳實踐</h3>
+<h4>設計階段防禦</h4>
+<ol>
+<li>
+<p><strong>日誌策略</strong></p>
+<ul>
+<li>定義需要記錄的事件</li>
+<li>定義日誌保留政策</li>
+</ul>
+</li>
+<li>
+<p><strong>監控策略</strong></p>
+<ul>
+<li>定義監控指標</li>
+<li>定義告警規則</li>
+</ul>
+</li>
+</ol>
+<h4>開發階段防禦</h4>
+<ol>
+<li><strong>安全日誌記錄</strong></li>
+</ol>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">winston</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'winston'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-k">const</span> <span class="pl-s1">logger</span> <span class="pl-c1">=</span> <span class="pl-s1">winston</span><span class="pl-kos">.</span><span class="pl-en">createLogger</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+  <span class="pl-c1">level</span>: <span class="pl-s">'info'</span><span class="pl-kos">,</span>
+  <span class="pl-c1">format</span>: <span class="pl-s1">winston</span><span class="pl-kos">.</span><span class="pl-c1">format</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">,</span>
+  <span class="pl-c1">transports</span>: <span class="pl-kos">[</span>
+    <span class="pl-k">new</span> <span class="pl-s1">winston</span><span class="pl-kos">.</span><span class="pl-c1">transports</span><span class="pl-kos">.</span><span class="pl-c1">File</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">filename</span>: <span class="pl-s">'security.log'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span>
+  <span class="pl-kos">]</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 記錄登入嘗試</span>
+<span class="pl-k">function</span> <span class="pl-en">logLoginAttempt</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">success</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-s1">logger</span><span class="pl-kos">.</span><span class="pl-en">info</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">event</span>: <span class="pl-s">'login_attempt'</span><span class="pl-kos">,</span>
+    <span class="pl-c1">ip</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">ip</span><span class="pl-kos">,</span>
+    <span class="pl-c1">userAgent</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">(</span><span class="pl-s">'user-agent'</span><span class="pl-kos">)</span><span class="pl-kos">,</span>
+    <span class="pl-c1">success</span>: <span class="pl-s1">success</span><span class="pl-kos">,</span>
+    <span class="pl-c1">timestamp</span>: <span class="pl-k">new</span> <span class="pl-v">Date</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toISOString</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-c">// 記錄權限失敗</span>
+<span class="pl-k">function</span> <span class="pl-en">logAccessDenied</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">resource</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-s1">logger</span><span class="pl-kos">.</span><span class="pl-en">warn</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">event</span>: <span class="pl-s">'access_denied'</span><span class="pl-kos">,</span>
+    <span class="pl-c1">ip</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">ip</span><span class="pl-kos">,</span>
+    <span class="pl-c1">userId</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">user</span><span class="pl-kos">?.</span><span class="pl-c1">id</span><span class="pl-kos">,</span>
+    <span class="pl-c1">resource</span>: <span class="pl-s1">resource</span><span class="pl-kos">,</span>
+    <span class="pl-c1">timestamp</span>: <span class="pl-k">new</span> <span class="pl-v">Date</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toISOString</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-c">// 記錄敏感操作</span>
+<span class="pl-k">function</span> <span class="pl-en">logSensitiveOperation</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">operation</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-s1">logger</span><span class="pl-kos">.</span><span class="pl-en">info</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">event</span>: <span class="pl-s">'sensitive_operation'</span><span class="pl-kos">,</span>
+    <span class="pl-c1">userId</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">user</span><span class="pl-kos">.</span><span class="pl-c1">id</span><span class="pl-kos">,</span>
+    <span class="pl-c1">operation</span>: <span class="pl-s1">operation</span><span class="pl-kos">,</span>
+    <span class="pl-c1">ip</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">ip</span><span class="pl-kos">,</span>
+    <span class="pl-c1">timestamp</span>: <span class="pl-k">new</span> <span class="pl-v">Date</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toISOString</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span></pre></div>
+<ol start="2">
+<li><strong>異常監控</strong></li>
+</ol>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 監控異常登入</span>
+<span class="pl-k">function</span> <span class="pl-en">monitorLoginAttempts</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-k">const</span> <span class="pl-s1">recentAttempts</span> <span class="pl-c1">=</span> <span class="pl-en">getRecentLoginAttempts</span><span class="pl-kos">(</span><span class="pl-c1">5</span> <span class="pl-c1">*</span> <span class="pl-c1">60</span> <span class="pl-c1">*</span> <span class="pl-c1">1000</span><span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// 5 分鐘內</span>
+  
+  <span class="pl-k">const</span> <span class="pl-s1">failedAttempts</span> <span class="pl-c1">=</span> <span class="pl-s1">recentAttempts</span><span class="pl-kos">.</span><span class="pl-en">filter</span><span class="pl-kos">(</span><span class="pl-s1">a</span> <span class="pl-c1">=&gt;</span> <span class="pl-c1">!</span><span class="pl-s1">a</span><span class="pl-kos">.</span><span class="pl-c1">success</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">failedAttempts</span><span class="pl-kos">.</span><span class="pl-c1">length</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">5</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-c">// 發送告警</span>
+    <span class="pl-en">sendAlert</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+      <span class="pl-c1">type</span>: <span class="pl-s">'brute_force_attempt'</span><span class="pl-kos">,</span>
+      <span class="pl-c1">ip</span>: <span class="pl-s1">failedAttempts</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">ip</span><span class="pl-kos">,</span>
+      <span class="pl-c1">count</span>: <span class="pl-s1">failedAttempts</span><span class="pl-kos">.</span><span class="pl-c1">length</span>
+    <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<h4>部署階段防禦</h4>
+<ol>
+<li>
+<p><strong>集中日誌管理</strong></p>
+<ul>
+<li>使用 ELK Stack、Splunk 等工具</li>
+<li>集中管理與分析日誌</li>
+</ul>
+</li>
+<li>
+<p><strong>即時監控</strong></p>
+<ul>
+<li>設定即時告警</li>
+<li>自動化回應機制</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>12. A10:2025 – Mishandling of Exceptional Conditions（異常條件處理不當）</h2>
+<h3>12.1 漏洞概述</h3>
+<p><strong>定義：</strong> 異常條件處理不當是指應用程式未能正確處理異常情況（如錯誤、邊界條件、資源耗盡等），導致安全漏洞或系統不穩定。</p>
+<p><strong>嚴重程度：</strong> Medium（中）</p>
+<p><strong>影響範圍：</strong></p>
+<ul>
+<li>系統崩潰或拒絕服務</li>
+<li>資訊洩露</li>
+<li>未預期的行為</li>
+<li>安全控制繞過</li>
+</ul>
+<h3>12.2 攻擊原理</h3>
+<p>異常條件處理不當的常見問題：</p>
+<ol>
+<li>
+<p><strong>錯誤訊息洩露</strong></p>
+<ul>
+<li>詳細的錯誤訊息洩露系統資訊</li>
+<li>Stack trace 暴露程式碼結構</li>
+<li>錯誤訊息包含敏感資料</li>
+</ul>
+</li>
+<li>
+<p><strong>資源耗盡</strong></p>
+<ul>
+<li>未限制資源使用</li>
+<li>無限迴圈或遞迴</li>
+<li>記憶體洩漏</li>
+</ul>
+</li>
+<li>
+<p><strong>邊界條件處理不當</strong></p>
+<ul>
+<li>未處理空值或 null</li>
+<li>未處理極大或極小值</li>
+<li>未處理特殊字元</li>
+</ul>
+</li>
+<li>
+<p><strong>異常處理邏輯缺陷</strong></p>
+<ul>
+<li>異常被忽略</li>
+<li>異常處理不完整</li>
+<li>異常處理後狀態不一致</li>
+</ul>
+</li>
+</ol>
+<h3>12.3 實際案例</h3>
+<p><strong>案例 1：錯誤訊息洩露敏感資訊</strong></p>
+<p>某 API 在發生錯誤時返回詳細的錯誤訊息：</p>
+<div class="highlight highlight-source-json"><pre class="notranslate">{
+  <span class="pl-ent">"error"</span>: <span class="pl-s"><span class="pl-pds">"</span>Database connection failed<span class="pl-pds">"</span></span>,
+  <span class="pl-ent">"details"</span>: <span class="pl-s"><span class="pl-pds">"</span>MySQL user 'admin'@'localhost' access denied for database 'production_db'<span class="pl-pds">"</span></span>,
+  <span class="pl-ent">"stack"</span>: <span class="pl-s"><span class="pl-pds">"</span>at Database.connect (/app/db.js:45:12)...<span class="pl-pds">"</span></span>
+}</pre></div>
+<p>攻擊者可以從錯誤訊息中獲取資料庫結構和使用者資訊。</p>
+<p><strong>案例 2：資源耗盡導致拒絕服務</strong></p>
+<p>某 API 端點處理大量資料時未限制處理時間：</p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">post</span><span class="pl-kos">(</span><span class="pl-s">'/api/process'</span><span class="pl-kos">,</span> <span class="pl-k">async</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-k">const</span> <span class="pl-s1">data</span> <span class="pl-c1">=</span> <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">.</span><span class="pl-c1">data</span><span class="pl-kos">;</span>  <span class="pl-c">// 可能包含數百萬筆資料</span>
+  <span class="pl-k">const</span> <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-en">processAllData</span><span class="pl-kos">(</span><span class="pl-s1">data</span><span class="pl-kos">)</span><span class="pl-kos">;</span>  <span class="pl-c">// 未限制處理時間</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-s1">result</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p>攻擊者發送大量資料導致伺服器資源耗盡。</p>
+<p><strong>案例 3：空指標異常導致系統崩潰</strong></p>
+<p>某應用程式未檢查空值：</p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">User</span><span class="pl-kos">.</span><span class="pl-en">findById</span><span class="pl-kos">(</span><span class="pl-s1">userId</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">email</span> <span class="pl-c1">=</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">email</span><span class="pl-kos">;</span>  <span class="pl-c">// 如果 user 為 null，會拋出異常</span></pre></div>
+<p>當 userId 不存在時，應用程式會崩潰。</p>
+<h3>12.4 防禦最佳實踐</h3>
+<h4>設計階段防禦</h4>
+<ol>
+<li>
+<p><strong>錯誤處理策略</strong></p>
+<ul>
+<li>定義錯誤處理標準</li>
+<li>分類錯誤類型</li>
+<li>定義錯誤回應格式</li>
+</ul>
+</li>
+<li>
+<p><strong>資源管理策略</strong></p>
+<ul>
+<li>定義資源限制</li>
+<li>實施超時機制</li>
+<li>實施速率限制</li>
+</ul>
+</li>
+</ol>
+<h4>開發階段防禦</h4>
+<ol>
+<li><strong>適當的錯誤處理</strong></li>
+</ol>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 不安全的錯誤處理</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">,</span> <span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">,</span> <span class="pl-s1">next</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">500</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">error</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">message</span><span class="pl-kos">,</span>  <span class="pl-c">// 洩露詳細錯誤資訊</span>
+    <span class="pl-c1">stack</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">stack</span>    <span class="pl-c">// 洩露堆疊追蹤</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 安全的錯誤處理</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">,</span> <span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">,</span> <span class="pl-s1">next</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-c">// 記錄詳細錯誤到日誌（僅伺服器端）</span>
+  <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">error</span><span class="pl-kos">(</span><span class="pl-s">'Error:'</span><span class="pl-kos">,</span> <span class="pl-kos">{</span>
+    <span class="pl-c1">message</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">message</span><span class="pl-kos">,</span>
+    <span class="pl-c1">stack</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">stack</span><span class="pl-kos">,</span>
+    <span class="pl-c1">url</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">url</span><span class="pl-kos">,</span>
+    <span class="pl-c1">method</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">method</span><span class="pl-kos">,</span>
+    <span class="pl-c1">timestamp</span>: <span class="pl-k">new</span> <span class="pl-v">Date</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toISOString</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  
+  <span class="pl-c">// 根據錯誤類型返回適當的錯誤訊息</span>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">err</span> <span class="pl-k">instanceof</span> <span class="pl-v">ValidationError</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">400</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+      <span class="pl-c1">error</span>: <span class="pl-s">'Invalid input'</span><span class="pl-kos">,</span>
+      <span class="pl-c1">details</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">details</span>  <span class="pl-c">// 僅包含驗證錯誤，不包含系統資訊</span>
+    <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+  
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">err</span> <span class="pl-k">instanceof</span> <span class="pl-v">AuthenticationError</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">401</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+      <span class="pl-c1">error</span>: <span class="pl-s">'Authentication failed'</span>
+    <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+  
+  <span class="pl-c">// 通用錯誤訊息（不洩露系統資訊）</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">500</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">error</span>: <span class="pl-s">'An error occurred'</span><span class="pl-kos">,</span>
+    <span class="pl-c1">requestId</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">id</span>  <span class="pl-c">// 提供請求 ID 以便追蹤</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<ol start="2">
+<li><strong>空值檢查</strong></li>
+</ol>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 不安全的實作</span>
+<span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">User</span><span class="pl-kos">.</span><span class="pl-en">findById</span><span class="pl-kos">(</span><span class="pl-s1">userId</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">email</span> <span class="pl-c1">=</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">email</span><span class="pl-kos">;</span>
+
+<span class="pl-c">// 安全的實作</span>
+<span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">User</span><span class="pl-kos">.</span><span class="pl-en">findById</span><span class="pl-kos">(</span><span class="pl-s1">userId</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">user</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">404</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'User not found'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
+<span class="pl-k">const</span> <span class="pl-s1">email</span> <span class="pl-c1">=</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">email</span><span class="pl-kos">;</span></pre></div>
+<ol start="3">
+<li><strong>資源限制</strong></li>
+</ol>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 實施超時機制</span>
+<span class="pl-k">const</span> <span class="pl-s1">timeout</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'connect-timeout'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-s1">timeout</span><span class="pl-kos">(</span><span class="pl-s">'30s'</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>  <span class="pl-c">// 設定 30 秒超時</span>
+
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">post</span><span class="pl-kos">(</span><span class="pl-s">'/api/process'</span><span class="pl-kos">,</span> <span class="pl-k">async</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-c">// 檢查請求大小</span>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">.</span><span class="pl-c1">data</span> <span class="pl-c1">&amp;&amp;</span> <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">.</span><span class="pl-c1">data</span><span class="pl-kos">.</span><span class="pl-c1">length</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">10000</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">413</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Payload too large'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+  
+  <span class="pl-c">// 實施處理時間限制</span>
+  <span class="pl-k">const</span> <span class="pl-s1">startTime</span> <span class="pl-c1">=</span> <span class="pl-v">Date</span><span class="pl-kos">.</span><span class="pl-en">now</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-k">const</span> <span class="pl-s1">maxProcessingTime</span> <span class="pl-c1">=</span> <span class="pl-c1">10000</span><span class="pl-kos">;</span>  <span class="pl-c">// 10 秒</span>
+  
+  <span class="pl-k">try</span> <span class="pl-kos">{</span>
+    <span class="pl-k">const</span> <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-en">processDataWithTimeout</span><span class="pl-kos">(</span>
+      <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">.</span><span class="pl-c1">data</span><span class="pl-kos">,</span>
+      <span class="pl-s1">maxProcessingTime</span>
+    <span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-s1">result</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span> <span class="pl-k">catch</span> <span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">name</span> <span class="pl-c1">===</span> <span class="pl-s">'TimeoutError'</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+      <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">408</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Request timeout'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
+    <span class="pl-k">throw</span> <span class="pl-s1">err</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<ol start="4">
+<li><strong>輸入驗證與清理</strong></li>
+</ol>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">function</span> <span class="pl-en">validateInput</span><span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-c">// 檢查空值</span>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">input</span> <span class="pl-c1">===</span> <span class="pl-c1">null</span> <span class="pl-c1">||</span> <span class="pl-s1">input</span> <span class="pl-c1">===</span> <span class="pl-c1">undefined</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-v">ValidationError</span><span class="pl-kos">(</span><span class="pl-s">'Input cannot be null'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+  
+  <span class="pl-c">// 檢查類型</span>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-k">typeof</span> <span class="pl-s1">input</span> <span class="pl-c1">!==</span> <span class="pl-s">'string'</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-v">ValidationError</span><span class="pl-kos">(</span><span class="pl-s">'Input must be a string'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+  
+  <span class="pl-c">// 檢查長度</span>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">.</span><span class="pl-c1">length</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">1000</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-v">ValidationError</span><span class="pl-kos">(</span><span class="pl-s">'Input too long'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+  
+  <span class="pl-c">// 清理輸入</span>
+  <span class="pl-k">return</span> <span class="pl-s1">input</span><span class="pl-kos">.</span><span class="pl-en">trim</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span></pre></div>
+<h4>部署階段防禦</h4>
+<ol>
+<li>
+<p><strong>監控與告警</strong></p>
+<ul>
+<li>監控錯誤率</li>
+<li>監控資源使用</li>
+<li>設定異常告警</li>
+</ul>
+</li>
+<li>
+<p><strong>日誌管理</strong></p>
+<ul>
+<li>記錄詳細錯誤到日誌</li>
+<li>不將敏感資訊記錄到日誌</li>
+<li>定期審查日誌</li>
+</ul>
+</li>
+</ol>
+<hr>
+<hr>
+<div align="center">
+<h2>防禦策略總覽</h2>
+<p><strong>建立持續性的安全防護機制</strong></p>
+</div>
+<hr>
+<h3>14.1 安全開發生命週期（SDLC）</h3>
+<p>將安全整合到軟體開發生命週期的每個階段：</p>
+<h4>需求階段</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" aria-label="Incomplete task"> 識別安全需求</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" aria-label="Incomplete task"> 進行威脅建模</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" aria-label="Incomplete task"> 定義安全標準</li>
+</ul>
+<h4>設計階段</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" aria-label="Incomplete task"> 設計安全架構</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" aria-label="Incomplete task"> 定義安全控制措施</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" aria-label="Incomplete task"> 設計安全預設值</li>
+</ul>
+<h4>開發階段</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" aria-label="Incomplete task"> 實施安全編碼實踐</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" aria-label="Incomplete task"> 進行程式碼審查</li>
+</ul>
+<h4>部署階段</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" aria-label="Incomplete task"> 安全配置檢查</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" aria-label="Incomplete task"> 安全監控設定</li>
+<li class="task-list-item"><input type="checkbox" id="" disabled="" class="task-list-item-checkbox" aria-label="Incomplete task"> 應急計畫準備</li>
+</ul>
+<h3>14.2 DevSecOps 實踐</h3>
+<p>將安全整合到 DevOps 流程：</p>
+<ol>
+<li>
+<p><strong>CI/CD 中的安全整合</strong></p>
+<ul>
+<li>自動化合規檢查</li>
+<li>程式碼品質檢查</li>
+</ul>
+</li>
+<li>
+<p><strong>基礎設施即程式碼（IaC）安全</strong></p>
+<ul>
+<li>安全配置模板</li>
+<li>自動化安全檢查</li>
+</ul>
+</li>
+<li>
+<p><strong>持續監控</strong></p>
+<ul>
+<li>即時安全監控</li>
+<li>自動化告警</li>
+<li>自動化回應</li>
+</ul>
+</li>
+</ol>
+<h3>14.3 安全框架與標準</h3>
+<h4>OWASP ASVS（Application Security Verification Standard）</h4>
+<p>OWASP ASVS 提供了應用程式安全驗證標準，包含三個等級：</p>
+<ul>
+<li><strong>Level 1：</strong> 基本安全要求</li>
+<li><strong>Level 2：</strong> 標準安全要求</li>
+<li><strong>Level 3：</strong> 進階安全要求</li>
+</ul>
+<h4>NIST Cybersecurity Framework</h4>
+<p>NIST 網路安全框架提供五個核心功能：</p>
+<ol>
+<li><strong>識別（Identify）</strong></li>
+<li><strong>保護（Protect）</strong></li>
+<li><strong>偵測（Detect）</strong></li>
+<li><strong>回應（Respond）</strong></li>
+<li><strong>復原（Recover）</strong></li>
+</ol>
+<h3>14.4 持續監控與改善</h3>
+<ol>
+<li>
+<p><strong>安全監控機制</strong></p>
+<ul>
+<li>日誌集中管理</li>
+<li>即時異常偵測</li>
+<li>自動化告警</li>
+</ul>
+</li>
+<li>
+<p><strong>漏洞管理流程</strong></p>
+<ul>
+<li>漏洞識別</li>
+<li>漏洞評估</li>
+<li>漏洞修復</li>
+<li>漏洞驗證</li>
+</ul>
+</li>
+<li>
+<p><strong>定期安全評估</strong></p>
+<ul>
+<li>定期安全審計</li>
+<li>定期風險評估</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>15. 常見問題（FAQ）</h2>
+<h3>Q1: OWASP Top 10 2025 與 2021 版本的主要差異是什麼？</h3>
+<p><strong>A:</strong> 2025 版本對比 2021 版本有以下重大變化：</p>
+<ul>
+<li><strong>API 安全</strong> - 更多針對 API 的安全建議</li>
+<li><strong>雲端安全</strong> - 增加雲端環境的安全考量</li>
+<li><strong>供應鏈安全</strong> - 強調第三方元件的安全風險</li>
+<li><strong>自動化威脅</strong> - 關注 AI/ML 驅動的自動化攻擊</li>
+</ul>
+<p>最終版本可能會調整編號與內容，建議持續關注 OWASP 官方更新。</p>
+<h3>Q2: 如何優先處理發現的漏洞？</h3>
+<p><strong>A:</strong> 建議按照以下優先順序：</p>
+<ol>
+<li>
+<p><strong>Critical（嚴重）</strong> - 立即修復（24-48 小時內）</p>
+<ul>
+<li>可導致資料外洩或系統被完全控制</li>
+<li>例如：SQL Injection、權限控制失效</li>
+</ul>
+</li>
+<li>
+<p><strong>High（高）</strong> - 1 週內修復</p>
+<ul>
+<li>可導致敏感資料外洩或未授權存取</li>
+<li>例如：加密機制失效、身份驗證失敗</li>
+</ul>
+</li>
+<li>
+<p><strong>Medium（中）</strong> - 1 個月內修復</p>
+<ul>
+<li>可能導致資訊洩露或功能被濫用</li>
+<li>例如：安全設定錯誤、日誌監控失敗</li>
+</ul>
+</li>
+<li>
+<p><strong>Low（低）</strong> - 下次版本更新時修復</p>
+<ul>
+<li>影響較小或需要特定條件</li>
+<li>例如：資訊洩露風險較低的問題</li>
+</ul>
+</li>
+</ol>
+<h3>Q5: 小型團隊如何實施 Top 10 防禦？</h3>
+<p><strong>A:</strong> 小型團隊可以採用以下策略：</p>
+<ol>
+<li>
+<p><strong>優先處理高風險項目</strong></p>
+<ul>
+<li>專注於 Critical 和 High 風險項目</li>
+<li>使用現成的安全框架與工具</li>
+</ul>
+</li>
+<li>
+<p><strong>自動化安全檢查</strong></p>
+<ul>
+<li>整合安全掃描到 CI/CD</li>
+<li>使用免費工具（如 OWASP ZAP、Snyk）</li>
+</ul>
+</li>
+<li>
+<p><strong>尋求專業協助</strong></p>
+<ul>
+<li>定期進行專業安全評估</li>
+<li>尋求安全顧問協助</li>
+</ul>
+</li>
+<li>
+<p><strong>持續學習</strong></p>
+<ul>
+<li>團隊安全培訓</li>
+<li>關注安全最佳實踐</li>
+</ul>
+</li>
+</ol>
+<h3>Q3: 如何將 Top 10 防禦整合到開發流程？</h3>
+<p><strong>A:</strong> 建議：</p>
+<ol>
+<li>
+<p><strong>開發階段</strong></p>
+<ul>
+<li>實施安全編碼實踐</li>
+<li>進行程式碼審查</li>
+<li>使用安全框架與函式庫</li>
+</ul>
+</li>
+<li>
+<p><strong>部署階段</strong></p>
+<ul>
+<li>安全配置檢查</li>
+<li>安全監控設定</li>
+</ul>
+</li>
+<li>
+<p><strong>運維階段</strong></p>
+<ul>
+<li>持續監控</li>
+<li>定期安全評估</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>16. 總結</h2>
+<h3>重點回顧</h3>
+<p>OWASP Top 10 2025 反映了當前 Web 應用程式安全的主要威脅。作為開發者或資安人員，了解這些漏洞的原理與防禦方法是保護應用程式安全的第一步。</p>
+<p><strong>關鍵要點：</strong></p>
+<ol>
+<li><strong>權限控制失效（A01）</strong> - 是最常見的漏洞類型，需要實施統一的權限檢查機制</li>
+<li><strong>安全設定錯誤（A02）</strong> - 提升到第二位，反映配置安全的重要性</li>
+<li><strong>軟體供應鏈失敗（A03）</strong> - 新增項目，強調 Log4j 等供應鏈攻擊的威脅</li>
+<li><strong>加密機制失效（A04）</strong> - 敏感資料必須加密傳輸與儲存</li>
+<li><strong>注入攻擊（A05）</strong> - 仍然是最危險的漏洞之一，必須使用參數化查詢</li>
+<li><strong>不安全設計（A06）</strong> - 安全應該從設計階段開始，而非事後補救</li>
+<li><strong>身份驗證失敗（A07）</strong> - 需要實施強身份驗證和多因素驗證</li>
+<li><strong>軟體或資料完整性失敗（A08）</strong> - 需要驗證軟體來源和資料完整性</li>
+<li><strong>日誌與告警失敗（A09）</strong> - 需要實施適當的日誌記錄和監控機制</li>
+<li><strong>異常條件處理不當（A10）</strong> - 新增項目，關注錯誤處理和資源管理</li>
+</ol>
+<h3>關鍵學習</h3>
+<ol>
+<li>
+<p><strong>安全應該從設計開始</strong></p>
+<ul>
+<li>威脅建模與安全架構設計</li>
+<li>安全預設值與最佳實踐</li>
+</ul>
+</li>
+<li>
+<p><strong>持續監控與改善</strong></p>
+<ul>
+<li>建立安全監控機制</li>
+<li>定期安全評估與改善</li>
+</ul>
+</li>
+<li>
+<p><strong>團隊培訓的重要性</strong></p>
+<ul>
+<li>安全意識培訓</li>
+<li>安全編碼實踐培訓</li>
+</ul>
+</li>
+</ol>
+<h3>下一步行動</h3>
+<p><strong>對開發者的建議：</strong></p>
+<ul>
+<li>學習安全編碼實踐</li>
+<li>使用安全框架與函式庫</li>
+<li>進行程式碼安全審查</li>
+</ul>
+<p><strong>對資安團隊的建議：</strong></p>
+<ul>
+<li>建立安全流程</li>
+<li>整合安全檢查到 CI/CD</li>
+<li>定期進行安全評估</li>
+</ul>
+<p><strong>對技術決策者的建議：</strong></p>
+<ul>
+<li>建立安全開發文化</li>
+<li>投資安全工具與培訓</li>
+<li>尋求專業安全協助</li>
+</ul>
+<h3>持續學習資源</h3>
+<ul>
+<li>
+<p><strong>OWASP 官方資源</strong></p>
+<ul>
+<li>OWASP Top 10 2025: <a href="https://owasp.org/Top10/2025/" rel="nofollow">https://owasp.org/Top10/2025/</a></li>
+<li>OWASP ASVS: <a href="https://owasp.org/www-project-application-security-verification-standard/" rel="nofollow">https://owasp.org/www-project-application-security-verification-standard/</a></li>
+<li>OWASP Cheat Sheet Series: <a href="https://cheatsheetseries.owasp.org/" rel="nofollow">https://cheatsheetseries.owasp.org/</a></li>
+</ul>
+</li>
+<li>
+<p><strong>相關文章</strong></p>
+<ul>
+<li>Fenryx 技術部落格</li>
+<li>業界專家文章</li>
+</ul>
+</li>
+<li>
+<p><strong>工具與資源</strong></p>
+<ul>
+<li>Burp Suite: <a href="https://portswigger.net/burp" rel="nofollow">https://portswigger.net/burp</a></li>
+<li>OWASP ZAP: <a href="https://www.zaproxy.org/" rel="nofollow">https://www.zaproxy.org/</a></li>
+<li>Snyk: <a href="https://snyk.io/" rel="nofollow">https://snyk.io/</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<hr>
+<div align="center">
+<h2>行動呼籲</h2>
+<h3>需要專業的 OWASP Top 10 防禦協助？</h3>
+</div>
+<hr>
+<h3>為什麼選擇 Fenryx？</h3>
+<p>Fenryx 銳狼科技專注於<strong>以攻擊者視角打造強韌系統</strong>。我們提供：</p>
+<h4>專業安全服務</h4>
+<ul>
+<li><strong>滲透測試與攻擊工程</strong> - 模擬真實攻擊，找出系統弱點</li>
+<li><strong>軟體與系統開發</strong> - 從設計階段就融入安全考量</li>
+<li><strong>系統強化（Hardening）</strong> - 提升系統防禦能力</li>
+<li><strong>架構與技術顧問</strong> - 建立安全開發流程</li>
+</ul>
+<h4>OWASP Top 10 防禦專案</h4>
+<p>我們可以協助您：</p>
+<ul>
+<li><strong>全面安全評估</strong> - 針對 OWASP Top 10 2025 進行完整檢測</li>
+<li><strong>漏洞修復建議</strong> - 提供具體、可執行的修復方案</li>
+<li><strong>安全架構設計</strong> - 從設計階段避免安全漏洞</li>
+<li><strong>團隊培訓</strong> - 提升開發團隊的安全意識與技能</li>
+<li><strong>持續監控</strong> - 建立自動化安全檢查機制</li>
+</ul>
+<h4>服務優勢</h4>
+<ul>
+<li><strong>攻擊者視角</strong> - 我們以攻擊者的思維檢視系統，找出真正會被利用的弱點</li>
+<li><strong>實務導向</strong> - 所有建議都基於真實攻擊案例，確保實用性</li>
+<li><strong>快速交付</strong> - 敏捷流程，快速識別與修復問題</li>
+<li><strong>技術透明</strong> - 清楚說明發現的問題與修復方法，讓團隊真正理解</li>
+</ul>
+<hr>
+<h3>聯繫我們</h3>
+<div align="center">
+<p><strong>準備開始強化您的應用程式安全？</strong></p>
+<p><a href="https://fenryx.tech" rel="nofollow"><img src="https://camo.githubusercontent.com/e809a664a4bef435688654e729137ee01223fee74c04967c0a0525342b3b0ef5/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2545352541452539382545372542362542322d66656e7279782e746563682d4437323633383f7374796c653d666f722d7468652d6261646765" alt="Website" data-canonical-src="https://img.shields.io/badge/%E5%AE%98%E7%B6%B2-fenryx.tech-D72638?style=for-the-badge" style="max-width: 100%;"></a><br>
+<a href="mailto:contact@fenryx.tech"><img src="https://camo.githubusercontent.com/034b681902a107f12e5a181f7256d8a3c89e575e6f4bf3f98add879aed2f8a66/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f456d61696c2d636f6e746163744066656e7279782e746563682d4437323633383f7374796c653d666f722d7468652d6261646765" alt="Email" data-canonical-src="https://img.shields.io/badge/Email-contact@fenryx.tech-D72638?style=for-the-badge" style="max-width: 100%;"></a><br>
+<a href="https://fenryx.tech/contact" rel="nofollow"><img src="https://camo.githubusercontent.com/9aa7c913157ffe14d341f36f8e9cbfb938ca6ad8a38bd90fb6448525306b3af4/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2545382538312541462545372542352541312545382541312541382545352539362541452d2545352541312541422545352541462541422545392539432538302545362542312538322d4437323633383f7374796c653d666f722d7468652d6261646765" alt="Contact Form" data-canonical-src="https://img.shields.io/badge/%E8%81%AF%E7%B5%A1%E8%A1%A8%E5%96%AE-%E5%A1%AB%E5%AF%AB%E9%9C%80%E6%B1%82-D72638?style=for-the-badge" style="max-width: 100%;"></a></p>
+</div>
+<hr>
+<div align="center">
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://raw.githubusercontent.com/fenryx-tech/.github/main/profile/assets/logo/logotype.png"><img src="https://raw.githubusercontent.com/fenryx-tech/.github/main/profile/assets/logo/logotype.png" alt="Fenryx Logotype" width="500" style="max-width: 100%;"></a>
+<p><strong>Fenryx 銳狼科技</strong><br>
+<em>Engineering Resilience Through Offensive Thinking</em><br>
+<em>以攻擊視角打造強韌系統</em></p>
+<hr>
+<p><em>最後更新：2025-11-26</em></p>
+<p><a href="https://github.com/fenryx"><img src="https://camo.githubusercontent.com/d9ce72792c4f13d002d29b9fcf43ab353315dc4bd73c345e329956205a9a00c3/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4769744875622d2545392539372539432545362542332541382545362538382539312545352538302539312d3132313231323f7374796c653d666c61742d737175617265266c6f676f3d676974687562" alt="GitHub" data-canonical-src="https://img.shields.io/badge/GitHub-%E9%97%9C%E6%B3%A8%E6%88%91%E5%80%91-121212?style=flat-square&amp;logo=github" style="max-width: 100%;"></a><br>
+<a href="https://www.linkedin.com/company/fenryx" rel="nofollow"><img src="https://camo.githubusercontent.com/0a2810702096eaefc2a0c01205bf97ca486ffffe08d69560108f36faef7da295/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c696e6b6564496e2d2545382542462542442545382542392541342545362538382539312545352538302539312d3132313231323f7374796c653d666c61742d737175617265266c6f676f3d6c696e6b6564696e" alt="LinkedIn" data-canonical-src="https://img.shields.io/badge/LinkedIn-%E8%BF%BD%E8%B9%A4%E6%88%91%E5%80%91-121212?style=flat-square&amp;logo=linkedin" style="max-width: 100%;"></a></p>
+</div></div>
+<div style="font-size:small;margin-top:8px;float:right;"><p>© 2025 Fenryx 銳狼科技 | Engineering resilience through offensive thinking</p></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://fenryx.tech">Fenryx Engineering Blog</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.disabled=true;
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","fenryx-tech/fenryx-blog");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+
+
+</html>
