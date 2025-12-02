@@ -2,7 +2,7 @@ name: build Gmeek
 
 on:
   issues:
-    types: [opened, edited, labeled, unlabeled, closed, reopened, deleted]
+    types: [opened, edited, labeled, unlabeled, closed, reopened]
   schedule:
     - cron: "0 16 * * *"
   workflow_dispatch:
