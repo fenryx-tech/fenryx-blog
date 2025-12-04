@@ -54,10 +54,10 @@ jobs:
           cp -r /tmp/Gmeek/templates templates
           if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             echo "Running full rebuild for schedule/manual trigger"
-            python /tmp/Gmeek/Gmeek.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} --update_all
+            python /tmp/Gmeek/Gmeek.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} --issue_number 0
           else
-            echo "Running single issue update"
-            python /tmp/Gmeek/Gmeek.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} ${{ github.event.issue.number }}
+            echo "Running single issue update for issue #${{ github.event.issue.number }}"
+            python /tmp/Gmeek/Gmeek.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} --issue_number ${{ github.event.issue.number }}
           fi
 
       - name: Restore workflow and push
