@@ -52,7 +52,13 @@ jobs:
       - name: Generate new html
         run: |
           cp -r /tmp/Gmeek/templates templates
-          python /tmp/Gmeek/Gmeek.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }}
+          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "Running full rebuild for schedule/manual trigger"
+            python /tmp/Gmeek/Gmeek.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} --update_all
+          else
+            echo "Running single issue update"
+            python /tmp/Gmeek/Gmeek.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} ${{ github.event.issue.number }}
+          fi
 
       - name: Restore workflow and push
         run: |
