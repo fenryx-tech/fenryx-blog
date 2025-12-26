@@ -48,7 +48,7 @@ OWASP Top 10 2025 版本反映了當前 Web 應用程式安全的最新威脅趨
 - **更新資料** - 基於最新的漏洞統計資料
 - **調整優先順序** - 根據實際影響調整漏洞排名
 
-![OWASP Top 10 2025](https://owasp.org/Top10/assets/2025-mappings.png)
+![OWASP Top 10 2025](https://owasp.org/Top10/2025/assets/2025-mappings.png)
 
 ### 本文將涵蓋什麼？
 
