@@ -93,7 +93,7 @@ OWASP（Open Web Application Security Project）是一個非營利組織，致�
 <meta property="og:url" content="https://fenryx.tech/post/OWASP%20Top%2010%202025%EF%BC%9A-wan-zheng-jie-xi-yu-fang-yu-zhi-nan.html">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/191786188">
 <title>OWASP Top 10 2025：完整解析與防禦指南</title>
-
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
 
 
 </head>
@@ -554,55 +554,52 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </ol>
 <h4>程式碼範例</h4>
 <p><strong>不安全的實作：</strong></p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">// 危險：未驗證用戶是否有權存取此訂單
-app.get('/api/orders/:orderId', async (req, res) =&gt; {
-  const order = await Order.findById(req.params.orderId);
-  res.json(order);
-});
-</code></pre>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 危險：未驗證用戶是否有權存取此訂單</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">(</span><span class="pl-s">'/api/orders/:orderId'</span><span class="pl-kos">,</span> <span class="pl-k">async</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-k">const</span> <span class="pl-s1">order</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">Order</span><span class="pl-kos">.</span><span class="pl-en">findById</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">params</span><span class="pl-kos">.</span><span class="pl-c1">orderId</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-s1">order</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <p><strong>安全的實作：</strong></p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">// 安全：驗證訂單屬於當前用戶
-app.get('/api/orders/:orderId', authenticateUser, async (req, res) =&gt; {
-  const order = await Order.findOne({
-    _id: req.params.orderId,
-    userId: req.user.id  // 驗證資源擁有者
-  });
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 安全：驗證訂單屬於當前用戶</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">(</span><span class="pl-s">'/api/orders/:orderId'</span><span class="pl-kos">,</span> <span class="pl-s1">authenticateUser</span><span class="pl-kos">,</span> <span class="pl-k">async</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-k">const</span> <span class="pl-s1">order</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">Order</span><span class="pl-kos">.</span><span class="pl-en">findOne</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">_id</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">params</span><span class="pl-kos">.</span><span class="pl-c1">orderId</span><span class="pl-kos">,</span>
+    <span class="pl-c1">userId</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">user</span><span class="pl-kos">.</span><span class="pl-c1">id</span>  <span class="pl-c">// 驗證資源擁有者</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
   
-  if (!order) {
-    return res.status(404).json({ error: 'Order not found' });
-  }
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">order</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">404</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Order not found'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
   
-  res.json(order);
-});
-</code></pre>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-s1">order</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <p><strong>使用中間件統一檢查：</strong></p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">// 權限檢查中間件
-const checkResourceOwnership = (resourceModel, userIdField = 'userId') =&gt; {
-  return async (req, res, next) =&gt; {
-    const resource = await resourceModel.findById(req.params.id);
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 權限檢查中間件</span>
+<span class="pl-k">const</span> <span class="pl-en">checkResourceOwnership</span> <span class="pl-c1">=</span> <span class="pl-kos">(</span><span class="pl-s1">resourceModel</span><span class="pl-kos">,</span> <span class="pl-s1">userIdField</span> <span class="pl-c1">=</span> <span class="pl-s">'userId'</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-k">return</span> <span class="pl-k">async</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">,</span> <span class="pl-s1">next</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+    <span class="pl-k">const</span> <span class="pl-s1">resource</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">resourceModel</span><span class="pl-kos">.</span><span class="pl-en">findById</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">params</span><span class="pl-kos">.</span><span class="pl-c1">id</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
     
-    if (!resource) {
-      return res.status(404).json({ error: 'Resource not found' });
-    }
+    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">resource</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+      <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">404</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Resource not found'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
     
-    if (resource[userIdField] !== req.user.id &amp;&amp; !req.user.isAdmin) {
-      return res.status(403).json({ error: 'Access denied' });
-    }
+    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">resource</span><span class="pl-kos">[</span><span class="pl-s1">userIdField</span><span class="pl-kos">]</span> <span class="pl-c1">!==</span> <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">user</span><span class="pl-kos">.</span><span class="pl-c1">id</span> <span class="pl-c1">&amp;&amp;</span> <span class="pl-c1">!</span><span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">user</span><span class="pl-kos">.</span><span class="pl-c1">isAdmin</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+      <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">403</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Access denied'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
     
-    req.resource = resource;
-    next();
-  };
-};
+    <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">resource</span> <span class="pl-c1">=</span> <span class="pl-s1">resource</span><span class="pl-kos">;</span>
+    <span class="pl-s1">next</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">;</span>
 
-// 使用中間件
-app.get('/api/orders/:id', 
-  authenticateUser, 
-  checkResourceOwnership(Order),
-  (req, res) =&gt; {
-    res.json(req.resource);
-  }
-);
-</code></pre>
+<span class="pl-c">// 使用中間件</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">(</span><span class="pl-s">'/api/orders/:id'</span><span class="pl-kos">,</span> 
+  <span class="pl-s1">authenticateUser</span><span class="pl-kos">,</span> 
+  <span class="pl-en">checkResourceOwnership</span><span class="pl-kos">(</span><span class="pl-v">Order</span><span class="pl-kos">)</span><span class="pl-kos">,</span>
+  <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+    <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">resource</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <h4>部署階段防禦</h4>
 <ol>
 <li>
@@ -702,36 +699,34 @@ app.get('/api/orders/:id',
 </ol>
 <h4>程式碼範例</h4>
 <p><strong>設定安全 headers：</strong></p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">const helmet = require('helmet');
-app.use(helmet());
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">helmet</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'helmet'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-s1">helmet</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-// 或手動設定
-app.use((req, res, next) =&gt; {
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'DENY');
-  res.setHeader('X-XSS-Protection', '1; mode=block');
-  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-  next();
-});
-</code></pre>
+<span class="pl-c">// 或手動設定</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">,</span> <span class="pl-s1">next</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">setHeader</span><span class="pl-kos">(</span><span class="pl-s">'X-Content-Type-Options'</span><span class="pl-kos">,</span> <span class="pl-s">'nosniff'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">setHeader</span><span class="pl-kos">(</span><span class="pl-s">'X-Frame-Options'</span><span class="pl-kos">,</span> <span class="pl-s">'DENY'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">setHeader</span><span class="pl-kos">(</span><span class="pl-s">'X-XSS-Protection'</span><span class="pl-kos">,</span> <span class="pl-s">'1; mode=block'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">setHeader</span><span class="pl-kos">(</span><span class="pl-s">'Strict-Transport-Security'</span><span class="pl-kos">,</span> <span class="pl-s">'max-age=31536000; includeSubDomains'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">next</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <p><strong>錯誤處理：</strong></p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">// 不安全的錯誤處理
-app.use((err, req, res, next) =&gt; {
-  res.status(500).json({
-    error: err.message,  // 洩露詳細錯誤資訊
-    stack: err.stack    // 洩露堆疊追蹤
-  });
-});
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 不安全的錯誤處理</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">,</span> <span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">,</span> <span class="pl-s1">next</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">500</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">error</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">message</span><span class="pl-kos">,</span>  <span class="pl-c">// 洩露詳細錯誤資訊</span>
+    <span class="pl-c1">stack</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">stack</span>    <span class="pl-c">// 洩露堆疊追蹤</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-// 安全的錯誤處理
-app.use((err, req, res, next) =&gt; {
-  console.error(err);  // 記錄詳細錯誤到日誌
+<span class="pl-c">// 安全的錯誤處理</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">,</span> <span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">,</span> <span class="pl-s1">next</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">error</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">)</span><span class="pl-kos">;</span>  <span class="pl-c">// 記錄詳細錯誤到日誌</span>
   
-  res.status(500).json({
-    error: 'An error occurred'  // 通用錯誤訊息
-  });
-});
-</code></pre>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">500</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">error</span>: <span class="pl-s">'An error occurred'</span>  <span class="pl-c">// 通用錯誤訊息</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <h4>部署階段防禦</h4>
 <ol>
 <li>
@@ -832,39 +827,35 @@ app.use((err, req, res, next) =&gt; {
 </ol>
 <h4>程式碼範例</h4>
 <p><strong>使用 npm audit：</strong></p>
-<pre lang="bash" class="notranslate"><code class="notranslate"># 掃描漏洞
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 掃描漏洞</span>
 npm audit
 
-# 自動修復
+<span class="pl-c"><span class="pl-c">#</span> 自動修復</span>
 npm audit fix
 
-# 強制修復（可能破壞相容性）
-npm audit fix --force
-</code></pre>
+<span class="pl-c"><span class="pl-c">#</span> 強制修復（可能破壞相容性）</span>
+npm audit fix --force</pre></div>
 <p><strong>使用 Snyk：</strong></p>
-<pre lang="bash" class="notranslate"><code class="notranslate"># 安裝 Snyk
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 安裝 Snyk</span>
 npm install -g snyk
 
-# 掃描專案
-snyk test
+<span class="pl-c"><span class="pl-c">#</span> 掃描專案</span>
+snyk <span class="pl-c1">test</span>
 
-# 監控專案
-snyk monitor
-</code></pre>
+<span class="pl-c"><span class="pl-c">#</span> 監控專案</span>
+snyk monitor</pre></div>
 <p><strong>CI/CD 整合：</strong></p>
-<pre lang="yaml" class="notranslate"><code class="notranslate"># GitHub Actions 範例
-- name: Run security audit
-  run: |
-    npm audit --audit-level=high
-    snyk test --severity-threshold=high
-</code></pre>
+<div class="highlight highlight-source-yaml"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> GitHub Actions 範例</span>
+- <span class="pl-ent">name</span>: <span class="pl-s">Run security audit</span>
+  <span class="pl-ent">run</span>: <span class="pl-s">|</span>
+<span class="pl-s">    npm audit --audit-level=high</span>
+<span class="pl-s">    snyk test --severity-threshold=high</span></pre></div>
 <p><strong>使用 SBOM（Software Bill of Materials）：</strong></p>
-<pre lang="bash" class="notranslate"><code class="notranslate"># 產生 SBOM
-npm list --json &gt; sbom.json
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 產生 SBOM</span>
+npm list --json <span class="pl-k">&gt;</span> sbom.json
 
-# 使用工具分析 SBOM
-cyclonedx-bom -o sbom.xml
-</code></pre>
+<span class="pl-c"><span class="pl-c">#</span> 使用工具分析 SBOM</span>
+cyclonedx-bom -o sbom.xml</pre></div>
 <h4>部署階段防禦</h4>
 <ol>
 <li>
@@ -989,71 +980,68 @@ cyclonedx-bom -o sbom.xml
 </ol>
 <h4>程式碼範例</h4>
 <p><strong>不安全的實作：</strong></p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">// 危險：密碼明文儲存
-const user = {
-  username: 'john',
-  password: 'password123'  // 明文密碼
-};
-await db.users.insert(user);
-</code></pre>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 危險：密碼明文儲存</span>
+<span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-kos">{</span>
+  <span class="pl-c1">username</span>: <span class="pl-s">'john'</span><span class="pl-kos">,</span>
+  <span class="pl-c1">password</span>: <span class="pl-s">'password123'</span>  <span class="pl-c">// 明文密碼</span>
+<span class="pl-kos">}</span><span class="pl-kos">;</span>
+<span class="pl-k">await</span> <span class="pl-s1">db</span><span class="pl-kos">.</span><span class="pl-c1">users</span><span class="pl-kos">.</span><span class="pl-en">insert</span><span class="pl-kos">(</span><span class="pl-s1">user</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <p><strong>安全的實作：</strong></p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">const bcrypt = require('bcrypt');
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">bcrypt</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'bcrypt'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-// 安全：使用 bcrypt 雜湊密碼
-// saltRounds (cost factor) 建議值：10-12
-// 10 = 快速但較不安全，12 = 較慢但更安全
-// 根據硬體效能選擇，一般建議使用 10-11
-const saltRounds = 10;
-const hashedPassword = await bcrypt.hash(password, saltRounds);
+<span class="pl-c">// 安全：使用 bcrypt 雜湊密碼</span>
+<span class="pl-c">// saltRounds (cost factor) 建議值：10-12</span>
+<span class="pl-c">// 10 = 快速但較不安全，12 = 較慢但更安全</span>
+<span class="pl-c">// 根據硬體效能選擇，一般建議使用 10-11</span>
+<span class="pl-k">const</span> <span class="pl-s1">saltRounds</span> <span class="pl-c1">=</span> <span class="pl-c1">10</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">hashedPassword</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">bcrypt</span><span class="pl-kos">.</span><span class="pl-en">hash</span><span class="pl-kos">(</span><span class="pl-s1">password</span><span class="pl-kos">,</span> <span class="pl-s1">saltRounds</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-const user = {
-  username: 'john',
-  password: hashedPassword  // 雜湊後的密碼
-};
-await db.users.insert(user);
+<span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-kos">{</span>
+  <span class="pl-c1">username</span>: <span class="pl-s">'john'</span><span class="pl-kos">,</span>
+  <span class="pl-c1">password</span>: <span class="pl-s1">hashedPassword</span>  <span class="pl-c">// 雜湊後的密碼</span>
+<span class="pl-kos">}</span><span class="pl-kos">;</span>
+<span class="pl-k">await</span> <span class="pl-s1">db</span><span class="pl-kos">.</span><span class="pl-c1">users</span><span class="pl-kos">.</span><span class="pl-en">insert</span><span class="pl-kos">(</span><span class="pl-s1">user</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-// 驗證密碼
-const isValid = await bcrypt.compare(inputPassword, user.password);
-</code></pre>
+<span class="pl-c">// 驗證密碼</span>
+<span class="pl-k">const</span> <span class="pl-s1">isValid</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">bcrypt</span><span class="pl-kos">.</span><span class="pl-en">compare</span><span class="pl-kos">(</span><span class="pl-s1">inputPassword</span><span class="pl-kos">,</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">password</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <p><strong>敏感資料加密：</strong></p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">const crypto = require('crypto');
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">crypto</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'crypto'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-// 加密敏感資料
-// 注意：key 應該是 32 bytes (256 bits) 的 Buffer
-// 實際應用中應使用金鑰管理服務（KMS）而非硬編碼
-function encrypt(text, key) {
-  // 產生隨機 IV（初始化向量）
-  // IV 必須是隨機的，且不需要保密，但每次加密都應該不同
-  const iv = crypto.randomBytes(16);
+<span class="pl-c">// 加密敏感資料</span>
+<span class="pl-c">// 注意：key 應該是 32 bytes (256 bits) 的 Buffer</span>
+<span class="pl-c">// 實際應用中應使用金鑰管理服務（KMS）而非硬編碼</span>
+<span class="pl-k">function</span> <span class="pl-en">encrypt</span><span class="pl-kos">(</span><span class="pl-s1">text</span><span class="pl-kos">,</span> <span class="pl-s1">key</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-c">// 產生隨機 IV（初始化向量）</span>
+  <span class="pl-c">// IV 必須是隨機的，且不需要保密，但每次加密都應該不同</span>
+  <span class="pl-k">const</span> <span class="pl-s1">iv</span> <span class="pl-c1">=</span> <span class="pl-s1">crypto</span><span class="pl-kos">.</span><span class="pl-en">randomBytes</span><span class="pl-kos">(</span><span class="pl-c1">16</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
   
-  // 使用 AES-256-CBC 加密
-  // createCipheriv 是正確的方法（createCipher 已棄用）
-  const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+  <span class="pl-c">// 使用 AES-256-CBC 加密</span>
+  <span class="pl-c">// createCipheriv 是正確的方法（createCipher 已棄用）</span>
+  <span class="pl-k">const</span> <span class="pl-s1">cipher</span> <span class="pl-c1">=</span> <span class="pl-s1">crypto</span><span class="pl-kos">.</span><span class="pl-en">createCipheriv</span><span class="pl-kos">(</span><span class="pl-s">'aes-256-cbc'</span><span class="pl-kos">,</span> <span class="pl-s1">key</span><span class="pl-kos">,</span> <span class="pl-s1">iv</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
   
-  let encrypted = cipher.update(text, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
+  <span class="pl-k">let</span> <span class="pl-s1">encrypted</span> <span class="pl-c1">=</span> <span class="pl-s1">cipher</span><span class="pl-kos">.</span><span class="pl-en">update</span><span class="pl-kos">(</span><span class="pl-s1">text</span><span class="pl-kos">,</span> <span class="pl-s">'utf8'</span><span class="pl-kos">,</span> <span class="pl-s">'hex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">encrypted</span> <span class="pl-c1">+=</span> <span class="pl-s1">cipher</span><span class="pl-kos">.</span><span class="pl-en">final</span><span class="pl-kos">(</span><span class="pl-s">'hex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
   
-  // 將 IV 與加密資料一起儲存（IV 不需要保密）
-  return iv.toString('hex') + ':' + encrypted;
-}
+  <span class="pl-c">// 將 IV 與加密資料一起儲存（IV 不需要保密）</span>
+  <span class="pl-k">return</span> <span class="pl-s1">iv</span><span class="pl-kos">.</span><span class="pl-en">toString</span><span class="pl-kos">(</span><span class="pl-s">'hex'</span><span class="pl-kos">)</span> <span class="pl-c1">+</span> <span class="pl-s">':'</span> <span class="pl-c1">+</span> <span class="pl-s1">encrypted</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
 
-// 解密敏感資料
-function decrypt(encryptedText, key) {
-  const parts = encryptedText.split(':');
-  const iv = Buffer.from(parts[0], 'hex');
-  const encrypted = parts[1];
+<span class="pl-c">// 解密敏感資料</span>
+<span class="pl-k">function</span> <span class="pl-en">decrypt</span><span class="pl-kos">(</span><span class="pl-s1">encryptedText</span><span class="pl-kos">,</span> <span class="pl-s1">key</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-k">const</span> <span class="pl-s1">parts</span> <span class="pl-c1">=</span> <span class="pl-s1">encryptedText</span><span class="pl-kos">.</span><span class="pl-en">split</span><span class="pl-kos">(</span><span class="pl-s">':'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-k">const</span> <span class="pl-s1">iv</span> <span class="pl-c1">=</span> <span class="pl-v">Buffer</span><span class="pl-kos">.</span><span class="pl-en">from</span><span class="pl-kos">(</span><span class="pl-s1">parts</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">,</span> <span class="pl-s">'hex'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-k">const</span> <span class="pl-s1">encrypted</span> <span class="pl-c1">=</span> <span class="pl-s1">parts</span><span class="pl-kos">[</span><span class="pl-c1">1</span><span class="pl-kos">]</span><span class="pl-kos">;</span>
   
-  const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
-  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
+  <span class="pl-k">const</span> <span class="pl-s1">decipher</span> <span class="pl-c1">=</span> <span class="pl-s1">crypto</span><span class="pl-kos">.</span><span class="pl-en">createDecipheriv</span><span class="pl-kos">(</span><span class="pl-s">'aes-256-cbc'</span><span class="pl-kos">,</span> <span class="pl-s1">key</span><span class="pl-kos">,</span> <span class="pl-s1">iv</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-k">let</span> <span class="pl-s1">decrypted</span> <span class="pl-c1">=</span> <span class="pl-s1">decipher</span><span class="pl-kos">.</span><span class="pl-en">update</span><span class="pl-kos">(</span><span class="pl-s1">encrypted</span><span class="pl-kos">,</span> <span class="pl-s">'hex'</span><span class="pl-kos">,</span> <span class="pl-s">'utf8'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">decrypted</span> <span class="pl-c1">+=</span> <span class="pl-s1">decipher</span><span class="pl-kos">.</span><span class="pl-en">final</span><span class="pl-kos">(</span><span class="pl-s">'utf8'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
   
-  return decrypted;
-}
+  <span class="pl-k">return</span> <span class="pl-s1">decrypted</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
 
-// 實際使用範例（使用環境變數或 KMS）
-// const key = Buffer.from(process.env.ENCRYPTION_KEY, 'hex'); // 32 bytes
-// const encrypted = encrypt('sensitive data', key);
-</code></pre>
+<span class="pl-c">// 實際使用範例（使用環境變數或 KMS）</span>
+<span class="pl-c">// const key = Buffer.from(process.env.ENCRYPTION_KEY, 'hex'); // 32 bytes</span>
+<span class="pl-c">// const encrypted = encrypt('sensitive data', key);</span></pre></div>
 <h4>部署階段防禦</h4>
 <ol>
 <li>
@@ -1118,15 +1106,13 @@ function decrypt(encryptedText, key) {
 <h3>7.3 實際案例</h3>
 <p><strong>案例 1：SQL Injection 導致資料外洩</strong></p>
 <p>某登入頁面的 SQL 查詢：</p>
-<pre lang="sql" class="notranslate"><code class="notranslate">SELECT * FROM users WHERE username = '$username' AND password = '$password'
-</code></pre>
+<div class="highlight highlight-source-sql"><pre class="notranslate"><span class="pl-k">SELECT</span> <span class="pl-k">*</span> <span class="pl-k">FROM</span> users <span class="pl-k">WHERE</span> username <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>$username<span class="pl-pds">'</span></span> <span class="pl-k">AND</span> password <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>$password<span class="pl-pds">'</span></span></pre></div>
 <p>攻擊者輸入：</p>
 <pre class="notranslate"><code class="notranslate">Username: admin'--
 Password: anything
 </code></pre>
 <p>實際執行的 SQL：</p>
-<pre lang="sql" class="notranslate"><code class="notranslate">SELECT * FROM users WHERE username = 'admin'--' AND password = 'anything'
-</code></pre>
+<div class="highlight highlight-source-sql"><pre class="notranslate"><span class="pl-k">SELECT</span> <span class="pl-k">*</span> <span class="pl-k">FROM</span> users <span class="pl-k">WHERE</span> username <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>admin<span class="pl-pds">'</span></span><span class="pl-c"><span class="pl-c">--</span>' AND password = 'anything'</span></pre></div>
 <p>結果：攻擊者成功以管理員身份登入。</p>
 <p><strong>案例 2：SQL Injection 導致資料刪除</strong></p>
 <p>攻擊者輸入：</p>
@@ -1170,50 +1156,46 @@ Password: anything
 </ol>
 <h4>程式碼範例</h4>
 <p><strong>不安全的實作：</strong></p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">// 危險：字串拼接 SQL 查詢
-const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
-const result = await db.query(query);
-</code></pre>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 危險：字串拼接 SQL 查詢</span>
+<span class="pl-k">const</span> <span class="pl-s1">query</span> <span class="pl-c1">=</span> <span class="pl-s">`SELECT * FROM users WHERE username = '<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">username</span><span class="pl-kos">}</span></span>' AND password = '<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">password</span><span class="pl-kos">}</span></span>'`</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">db</span><span class="pl-kos">.</span><span class="pl-en">query</span><span class="pl-kos">(</span><span class="pl-s1">query</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <p><strong>安全的實作：</strong></p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">// 安全：使用參數化查詢
-const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
-const result = await db.query(query, [username, password]);
-</code></pre>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 安全：使用參數化查詢</span>
+<span class="pl-k">const</span> <span class="pl-s1">query</span> <span class="pl-c1">=</span> <span class="pl-s">'SELECT * FROM users WHERE username = ? AND password = ?'</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">db</span><span class="pl-kos">.</span><span class="pl-en">query</span><span class="pl-kos">(</span><span class="pl-s1">query</span><span class="pl-kos">,</span> <span class="pl-kos">[</span><span class="pl-s1">username</span><span class="pl-kos">,</span> <span class="pl-s1">password</span><span class="pl-kos">]</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <p><strong>使用 ORM：</strong></p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">// 使用 Sequelize ORM（自動防止 SQL Injection）
-// ORM 會自動使用參數化查詢，防止 SQL Injection
-const user = await User.findOne({
-  where: {
-    username: username,
-    password: password  // 注意：實際應用中應先雜湊密碼再查詢
-  }
-});
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 使用 Sequelize ORM（自動防止 SQL Injection）</span>
+<span class="pl-c">// ORM 會自動使用參數化查詢，防止 SQL Injection</span>
+<span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">User</span><span class="pl-kos">.</span><span class="pl-en">findOne</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+  <span class="pl-c1">where</span>: <span class="pl-kos">{</span>
+    <span class="pl-c1">username</span>: <span class="pl-s1">username</span><span class="pl-kos">,</span>
+    <span class="pl-c1">password</span>: <span class="pl-s1">password</span>  <span class="pl-c">// 注意：實際應用中應先雜湊密碼再查詢</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-// 更好的做法：先雜湊密碼再查詢
-const hashedPassword = await bcrypt.hash(password, 10);
-const user = await User.findOne({
-  where: {
-    username: username,
-    password: hashedPassword
-  }
-});
-</code></pre>
+<span class="pl-c">// 更好的做法：先雜湊密碼再查詢</span>
+<span class="pl-k">const</span> <span class="pl-s1">hashedPassword</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">bcrypt</span><span class="pl-kos">.</span><span class="pl-en">hash</span><span class="pl-kos">(</span><span class="pl-s1">password</span><span class="pl-kos">,</span> <span class="pl-c1">10</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">User</span><span class="pl-kos">.</span><span class="pl-en">findOne</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+  <span class="pl-c1">where</span>: <span class="pl-kos">{</span>
+    <span class="pl-c1">username</span>: <span class="pl-s1">username</span><span class="pl-kos">,</span>
+    <span class="pl-c1">password</span>: <span class="pl-s1">hashedPassword</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <p><strong>輸入驗證：</strong></p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">const validator = require('validator');
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">validator</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'validator'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-// 驗證輸入
-function validateInput(input) {
-  // 移除特殊字元
-  const cleaned = validator.escape(input);
+<span class="pl-c">// 驗證輸入</span>
+<span class="pl-k">function</span> <span class="pl-en">validateInput</span><span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-c">// 移除特殊字元</span>
+  <span class="pl-k">const</span> <span class="pl-s1">cleaned</span> <span class="pl-c1">=</span> <span class="pl-s1">validator</span><span class="pl-kos">.</span><span class="pl-en">escape</span><span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
   
-  // 驗證格式
-  if (!validator.isAlphanumeric(cleaned)) {
-    throw new Error('Invalid input format');
-  }
+  <span class="pl-c">// 驗證格式</span>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">validator</span><span class="pl-kos">.</span><span class="pl-en">isAlphanumeric</span><span class="pl-kos">(</span><span class="pl-s1">cleaned</span><span class="pl-kos">)</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-v">Error</span><span class="pl-kos">(</span><span class="pl-s">'Invalid input format'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
   
-  return cleaned;
-}
-</code></pre>
+  <span class="pl-k">return</span> <span class="pl-s1">cleaned</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span></pre></div>
 <h4>部署階段防禦</h4>
 <ol>
 <li>
@@ -1384,104 +1366,101 @@ function validateInput(input) {
 <ol>
 <li><strong>強密碼政策</strong></li>
 </ol>
-<pre lang="javascript" class="notranslate"><code class="notranslate">const passwordValidator = require('password-validator');
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">passwordValidator</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'password-validator'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-const schema = new passwordValidator()
-  .is().min(8)                    // 最少 8 字元
-  .is().max(100)                  // 最多 100 字元
-  .has().uppercase()              // 必須有大寫字母
-  .has().lowercase()              // 必須有小寫字母
-  .has().digits()                 // 必須有數字
-  .has().symbols()                // 必須有特殊字元
-  .has().not().spaces();          // 不能有空格
+<span class="pl-k">const</span> <span class="pl-s1">schema</span> <span class="pl-c1">=</span> <span class="pl-k">new</span> <span class="pl-s1">passwordValidator</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+  <span class="pl-kos">.</span><span class="pl-en">is</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">min</span><span class="pl-kos">(</span><span class="pl-c1">8</span><span class="pl-kos">)</span>                    <span class="pl-c">// 最少 8 字元</span>
+  <span class="pl-kos">.</span><span class="pl-en">is</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">max</span><span class="pl-kos">(</span><span class="pl-c1">100</span><span class="pl-kos">)</span>                  <span class="pl-c">// 最多 100 字元</span>
+  <span class="pl-kos">.</span><span class="pl-en">has</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">uppercase</span><span class="pl-kos">(</span><span class="pl-kos">)</span>              <span class="pl-c">// 必須有大寫字母</span>
+  <span class="pl-kos">.</span><span class="pl-en">has</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">lowercase</span><span class="pl-kos">(</span><span class="pl-kos">)</span>              <span class="pl-c">// 必須有小寫字母</span>
+  <span class="pl-kos">.</span><span class="pl-en">has</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">digits</span><span class="pl-kos">(</span><span class="pl-kos">)</span>                 <span class="pl-c">// 必須有數字</span>
+  <span class="pl-kos">.</span><span class="pl-en">has</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">symbols</span><span class="pl-kos">(</span><span class="pl-kos">)</span>                <span class="pl-c">// 必須有特殊字元</span>
+  <span class="pl-kos">.</span><span class="pl-en">has</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">not</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">spaces</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>          <span class="pl-c">// 不能有空格</span>
 
-function validatePassword(password) {
-  return schema.validate(password);
-}
-</code></pre>
+<span class="pl-k">function</span> <span class="pl-en">validatePassword</span><span class="pl-kos">(</span><span class="pl-s1">password</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-k">return</span> <span class="pl-s1">schema</span><span class="pl-kos">.</span><span class="pl-en">validate</span><span class="pl-kos">(</span><span class="pl-s1">password</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span></pre></div>
 <ol start="2">
 <li><strong>安全的會話管理</strong></li>
 </ol>
-<pre lang="javascript" class="notranslate"><code class="notranslate">const session = require('express-session');
-const crypto = require('crypto');
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">session</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'express-session'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">crypto</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'crypto'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-app.use(session({
-  secret: crypto.randomBytes(64).toString('hex'),  // 使用強隨機 secret
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: true,        // 僅 HTTPS
-    httpOnly: true,      // 防止 XSS
-    maxAge: 30 * 60 * 1000,  // 30 分鐘
-    sameSite: 'strict'  // CSRF 防護
-  }
-}));
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-s1">session</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+  <span class="pl-c1">secret</span>: <span class="pl-s1">crypto</span><span class="pl-kos">.</span><span class="pl-en">randomBytes</span><span class="pl-kos">(</span><span class="pl-c1">64</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toString</span><span class="pl-kos">(</span><span class="pl-s">'hex'</span><span class="pl-kos">)</span><span class="pl-kos">,</span>  <span class="pl-c">// 使用強隨機 secret</span>
+  <span class="pl-c1">resave</span>: <span class="pl-c1">false</span><span class="pl-kos">,</span>
+  <span class="pl-c1">saveUninitialized</span>: <span class="pl-c1">false</span><span class="pl-kos">,</span>
+  <span class="pl-c1">cookie</span>: <span class="pl-kos">{</span>
+    <span class="pl-c1">secure</span>: <span class="pl-c1">true</span><span class="pl-kos">,</span>        <span class="pl-c">// 僅 HTTPS</span>
+    <span class="pl-c1">httpOnly</span>: <span class="pl-c1">true</span><span class="pl-kos">,</span>      <span class="pl-c">// 防止 XSS</span>
+    <span class="pl-c1">maxAge</span>: <span class="pl-c1">30</span> <span class="pl-c1">*</span> <span class="pl-c1">60</span> <span class="pl-c1">*</span> <span class="pl-c1">1000</span><span class="pl-kos">,</span>  <span class="pl-c">// 30 分鐘</span>
+    <span class="pl-c1">sameSite</span>: <span class="pl-s">'strict'</span>  <span class="pl-c">// CSRF 防護</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-// 登入時重新產生會話 ID（防止會話固定攻擊）
-app.post('/login', async (req, res) =&gt; {
-  try {
-    // 驗證用戶憑證
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
+<span class="pl-c">// 登入時重新產生會話 ID（防止會話固定攻擊）</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">post</span><span class="pl-kos">(</span><span class="pl-s">'/login'</span><span class="pl-kos">,</span> <span class="pl-k">async</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-k">try</span> <span class="pl-kos">{</span>
+    <span class="pl-c">// 驗證用戶憑證</span>
+    <span class="pl-k">const</span> <span class="pl-kos">{</span> username<span class="pl-kos">,</span> password <span class="pl-kos">}</span> <span class="pl-c1">=</span> <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">;</span>
+    <span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">User</span><span class="pl-kos">.</span><span class="pl-en">findOne</span><span class="pl-kos">(</span><span class="pl-kos">{</span> username <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
     
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
+    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">user</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+      <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">401</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Invalid credentials'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
     
-    const isValid = await bcrypt.compare(password, user.password);
-    if (!isValid) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
+    <span class="pl-k">const</span> <span class="pl-s1">isValid</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-s1">bcrypt</span><span class="pl-kos">.</span><span class="pl-en">compare</span><span class="pl-kos">(</span><span class="pl-s1">password</span><span class="pl-kos">,</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">password</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">isValid</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+      <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">401</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Invalid credentials'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
     
-    // 重新產生會話 ID（防止會話固定攻擊）
-    // 這確保攻擊者無法預先設定會話 ID
-    req.session.regenerate((err) =&gt; {
-      if (err) {
-        return res.status(500).json({ error: 'Login failed' });
-      }
+    <span class="pl-c">// 重新產生會話 ID（防止會話固定攻擊）</span>
+    <span class="pl-c">// 這確保攻擊者無法預先設定會話 ID</span>
+    <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">session</span><span class="pl-kos">.</span><span class="pl-en">regenerate</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+      <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+        <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">500</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Login failed'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+      <span class="pl-kos">}</span>
       
-      // 設定會話資料
-      req.session.userId = user.id;
-      req.session.role = user.role;
-      req.session.loginTime = Date.now();
+      <span class="pl-c">// 設定會話資料</span>
+      <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">session</span><span class="pl-kos">.</span><span class="pl-c1">userId</span> <span class="pl-c1">=</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">id</span><span class="pl-kos">;</span>
+      <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">session</span><span class="pl-kos">.</span><span class="pl-c1">role</span> <span class="pl-c1">=</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">role</span><span class="pl-kos">;</span>
+      <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">session</span><span class="pl-kos">.</span><span class="pl-c1">loginTime</span> <span class="pl-c1">=</span> <span class="pl-v">Date</span><span class="pl-kos">.</span><span class="pl-en">now</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
       
-      res.json({ success: true });
-    });
-  } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ error: 'Login failed' });
-  }
-});
-</code></pre>
+      <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">success</span>: <span class="pl-c1">true</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span> <span class="pl-k">catch</span> <span class="pl-kos">(</span><span class="pl-s1">error</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">error</span><span class="pl-kos">(</span><span class="pl-s">'Login error:'</span><span class="pl-kos">,</span> <span class="pl-s1">error</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">500</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Login failed'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <ol start="3">
 <li><strong>多因素驗證（MFA）</strong></li>
 </ol>
-<pre lang="javascript" class="notranslate"><code class="notranslate">const speakeasy = require('speakeasy');
-const QRCode = require('qrcode');
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">speakeasy</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'speakeasy'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-v">QRCode</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'qrcode'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-// 產生 MFA secret
-function generateMFASecret(user) {
-  const secret = speakeasy.generateSecret({
-    name: `Fenryx (${user.email})`
-  });
+<span class="pl-c">// 產生 MFA secret</span>
+<span class="pl-k">function</span> <span class="pl-en">generateMFASecret</span><span class="pl-kos">(</span><span class="pl-s1">user</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-k">const</span> <span class="pl-s1">secret</span> <span class="pl-c1">=</span> <span class="pl-s1">speakeasy</span><span class="pl-kos">.</span><span class="pl-en">generateSecret</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">name</span>: <span class="pl-s">`Fenryx (<span class="pl-s1"><span class="pl-kos">${</span><span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">email</span><span class="pl-kos">}</span></span>)`</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
   
-  // 儲存 secret
-  user.mfaSecret = secret.base32;
-  await user.save();
+  <span class="pl-c">// 儲存 secret</span>
+  <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">mfaSecret</span> <span class="pl-c1">=</span> <span class="pl-s1">secret</span><span class="pl-kos">.</span><span class="pl-c1">base32</span><span class="pl-kos">;</span>
+  <span class="pl-k">await</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-en">save</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
   
-  return secret.otpauth_url;
-}
+  <span class="pl-k">return</span> <span class="pl-s1">secret</span><span class="pl-kos">.</span><span class="pl-c1">otpauth_url</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
 
-// 驗證 MFA token
-function verifyMFAToken(user, token) {
-  return speakeasy.totp.verify({
-    secret: user.mfaSecret,
-    encoding: 'base32',
-    token: token,
-    window: 2  // 允許前後 2 個時間視窗
-  });
-}
-</code></pre>
+<span class="pl-c">// 驗證 MFA token</span>
+<span class="pl-k">function</span> <span class="pl-en">verifyMFAToken</span><span class="pl-kos">(</span><span class="pl-s1">user</span><span class="pl-kos">,</span> <span class="pl-s1">token</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-k">return</span> <span class="pl-s1">speakeasy</span><span class="pl-kos">.</span><span class="pl-c1">totp</span><span class="pl-kos">.</span><span class="pl-en">verify</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">secret</span>: <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">mfaSecret</span><span class="pl-kos">,</span>
+    <span class="pl-c1">encoding</span>: <span class="pl-s">'base32'</span><span class="pl-kos">,</span>
+    <span class="pl-c1">token</span>: <span class="pl-s1">token</span><span class="pl-kos">,</span>
+    <span class="pl-c1">window</span>: <span class="pl-c1">2</span>  <span class="pl-c">// 允許前後 2 個時間視窗</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span></pre></div>
 <h4>部署階段防禦</h4>
 <ol>
 <li>
@@ -1554,22 +1533,20 @@ function verifyMFAToken(user, token) {
 <ol>
 <li><strong>套件完整性驗證</strong></li>
 </ol>
-<pre lang="bash" class="notranslate"><code class="notranslate"># 使用 npm 驗證套件完整性
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 使用 npm 驗證套件完整性</span>
 npm ci --audit
 
-# 使用 GPG 驗證套件簽章
-gpg --verify package.tar.gz.asc package.tar.gz
-</code></pre>
+<span class="pl-c"><span class="pl-c">#</span> 使用 GPG 驗證套件簽章</span>
+gpg --verify package.tar.gz.asc package.tar.gz</pre></div>
 <ol start="2">
 <li><strong>CI/CD 安全</strong></li>
 </ol>
-<pre lang="yaml" class="notranslate"><code class="notranslate"># GitHub Actions 範例
-- name: Verify build integrity
-  run: |
-    # 驗證建置來源
-    # 簽署建置產物
-    gpg --sign build.tar.gz
-</code></pre>
+<div class="highlight highlight-source-yaml"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> GitHub Actions 範例</span>
+- <span class="pl-ent">name</span>: <span class="pl-s">Verify build integrity</span>
+  <span class="pl-ent">run</span>: <span class="pl-s">|</span>
+<span class="pl-s">    # 驗證建置來源</span>
+<span class="pl-s">    # 簽署建置產物</span>
+<span class="pl-s">    gpg --sign build.tar.gz</span></pre></div>
 <h4>部署階段防禦</h4>
 <ol>
 <li>
@@ -1650,68 +1627,66 @@ gpg --verify package.tar.gz.asc package.tar.gz
 <ol>
 <li><strong>安全日誌記錄</strong></li>
 </ol>
-<pre lang="javascript" class="notranslate"><code class="notranslate">const winston = require('winston');
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">winston</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'winston'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.File({ filename: 'security.log' })
-  ]
-});
+<span class="pl-k">const</span> <span class="pl-s1">logger</span> <span class="pl-c1">=</span> <span class="pl-s1">winston</span><span class="pl-kos">.</span><span class="pl-en">createLogger</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+  <span class="pl-c1">level</span>: <span class="pl-s">'info'</span><span class="pl-kos">,</span>
+  <span class="pl-c1">format</span>: <span class="pl-s1">winston</span><span class="pl-kos">.</span><span class="pl-c1">format</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">,</span>
+  <span class="pl-c1">transports</span>: <span class="pl-kos">[</span>
+    <span class="pl-k">new</span> <span class="pl-s1">winston</span><span class="pl-kos">.</span><span class="pl-c1">transports</span><span class="pl-kos">.</span><span class="pl-c1">File</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">filename</span>: <span class="pl-s">'security.log'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span>
+  <span class="pl-kos">]</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-// 記錄登入嘗試
-function logLoginAttempt(req, success) {
-  logger.info({
-    event: 'login_attempt',
-    ip: req.ip,
-    userAgent: req.get('user-agent'),
-    success: success,
-    timestamp: new Date().toISOString()
-  });
-}
+<span class="pl-c">// 記錄登入嘗試</span>
+<span class="pl-k">function</span> <span class="pl-en">logLoginAttempt</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">success</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-s1">logger</span><span class="pl-kos">.</span><span class="pl-en">info</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">event</span>: <span class="pl-s">'login_attempt'</span><span class="pl-kos">,</span>
+    <span class="pl-c1">ip</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">ip</span><span class="pl-kos">,</span>
+    <span class="pl-c1">userAgent</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-en">get</span><span class="pl-kos">(</span><span class="pl-s">'user-agent'</span><span class="pl-kos">)</span><span class="pl-kos">,</span>
+    <span class="pl-c1">success</span>: <span class="pl-s1">success</span><span class="pl-kos">,</span>
+    <span class="pl-c1">timestamp</span>: <span class="pl-k">new</span> <span class="pl-v">Date</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toISOString</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
 
-// 記錄權限失敗
-function logAccessDenied(req, resource) {
-  logger.warn({
-    event: 'access_denied',
-    ip: req.ip,
-    userId: req.user?.id,
-    resource: resource,
-    timestamp: new Date().toISOString()
-  });
-}
+<span class="pl-c">// 記錄權限失敗</span>
+<span class="pl-k">function</span> <span class="pl-en">logAccessDenied</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">resource</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-s1">logger</span><span class="pl-kos">.</span><span class="pl-en">warn</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">event</span>: <span class="pl-s">'access_denied'</span><span class="pl-kos">,</span>
+    <span class="pl-c1">ip</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">ip</span><span class="pl-kos">,</span>
+    <span class="pl-c1">userId</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">user</span><span class="pl-kos">?.</span><span class="pl-c1">id</span><span class="pl-kos">,</span>
+    <span class="pl-c1">resource</span>: <span class="pl-s1">resource</span><span class="pl-kos">,</span>
+    <span class="pl-c1">timestamp</span>: <span class="pl-k">new</span> <span class="pl-v">Date</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toISOString</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
 
-// 記錄敏感操作
-function logSensitiveOperation(req, operation) {
-  logger.info({
-    event: 'sensitive_operation',
-    userId: req.user.id,
-    operation: operation,
-    ip: req.ip,
-    timestamp: new Date().toISOString()
-  });
-}
-</code></pre>
+<span class="pl-c">// 記錄敏感操作</span>
+<span class="pl-k">function</span> <span class="pl-en">logSensitiveOperation</span><span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">operation</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-s1">logger</span><span class="pl-kos">.</span><span class="pl-en">info</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">event</span>: <span class="pl-s">'sensitive_operation'</span><span class="pl-kos">,</span>
+    <span class="pl-c1">userId</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">user</span><span class="pl-kos">.</span><span class="pl-c1">id</span><span class="pl-kos">,</span>
+    <span class="pl-c1">operation</span>: <span class="pl-s1">operation</span><span class="pl-kos">,</span>
+    <span class="pl-c1">ip</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">ip</span><span class="pl-kos">,</span>
+    <span class="pl-c1">timestamp</span>: <span class="pl-k">new</span> <span class="pl-v">Date</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toISOString</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span></pre></div>
 <ol start="2">
 <li><strong>異常監控</strong></li>
 </ol>
-<pre lang="javascript" class="notranslate"><code class="notranslate">// 監控異常登入
-function monitorLoginAttempts() {
-  const recentAttempts = getRecentLoginAttempts(5 * 60 * 1000); // 5 分鐘內
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 監控異常登入</span>
+<span class="pl-k">function</span> <span class="pl-en">monitorLoginAttempts</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-k">const</span> <span class="pl-s1">recentAttempts</span> <span class="pl-c1">=</span> <span class="pl-en">getRecentLoginAttempts</span><span class="pl-kos">(</span><span class="pl-c1">5</span> <span class="pl-c1">*</span> <span class="pl-c1">60</span> <span class="pl-c1">*</span> <span class="pl-c1">1000</span><span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// 5 分鐘內</span>
   
-  const failedAttempts = recentAttempts.filter(a =&gt; !a.success);
+  <span class="pl-k">const</span> <span class="pl-s1">failedAttempts</span> <span class="pl-c1">=</span> <span class="pl-s1">recentAttempts</span><span class="pl-kos">.</span><span class="pl-en">filter</span><span class="pl-kos">(</span><span class="pl-s1">a</span> <span class="pl-c1">=&gt;</span> <span class="pl-c1">!</span><span class="pl-s1">a</span><span class="pl-kos">.</span><span class="pl-c1">success</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
   
-  if (failedAttempts.length &gt; 5) {
-    // 發送告警
-    sendAlert({
-      type: 'brute_force_attempt',
-      ip: failedAttempts[0].ip,
-      count: failedAttempts.length
-    });
-  }
-}
-</code></pre>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">failedAttempts</span><span class="pl-kos">.</span><span class="pl-c1">length</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">5</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-c">// 發送告警</span>
+    <span class="pl-en">sendAlert</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+      <span class="pl-c1">type</span>: <span class="pl-s">'brute_force_attempt'</span><span class="pl-kos">,</span>
+      <span class="pl-c1">ip</span>: <span class="pl-s1">failedAttempts</span><span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">.</span><span class="pl-c1">ip</span><span class="pl-kos">,</span>
+      <span class="pl-c1">count</span>: <span class="pl-s1">failedAttempts</span><span class="pl-kos">.</span><span class="pl-c1">length</span>
+    <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
 <h4>部署階段防禦</h4>
 <ol>
 <li>
@@ -1780,27 +1755,24 @@ function monitorLoginAttempts() {
 <h3>12.3 實際案例</h3>
 <p><strong>案例 1：錯誤訊息洩露敏感資訊</strong></p>
 <p>某 API 在發生錯誤時返回詳細的錯誤訊息：</p>
-<pre lang="json" class="notranslate"><code class="notranslate">{
-  "error": "Database connection failed",
-  "details": "MySQL user 'admin'@'localhost' access denied for database 'production_db'",
-  "stack": "at Database.connect (/app/db.js:45:12)..."
-}
-</code></pre>
+<div class="highlight highlight-source-json"><pre class="notranslate">{
+  <span class="pl-ent">"error"</span>: <span class="pl-s"><span class="pl-pds">"</span>Database connection failed<span class="pl-pds">"</span></span>,
+  <span class="pl-ent">"details"</span>: <span class="pl-s"><span class="pl-pds">"</span>MySQL user 'admin'@'localhost' access denied for database 'production_db'<span class="pl-pds">"</span></span>,
+  <span class="pl-ent">"stack"</span>: <span class="pl-s"><span class="pl-pds">"</span>at Database.connect (/app/db.js:45:12)...<span class="pl-pds">"</span></span>
+}</pre></div>
 <p>攻擊者可以從錯誤訊息中獲取資料庫結構和使用者資訊。</p>
 <p><strong>案例 2：資源耗盡導致拒絕服務</strong></p>
 <p>某 API 端點處理大量資料時未限制處理時間：</p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">app.post('/api/process', async (req, res) =&gt; {
-  const data = req.body.data;  // 可能包含數百萬筆資料
-  const result = await processAllData(data);  // 未限制處理時間
-  res.json(result);
-});
-</code></pre>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">post</span><span class="pl-kos">(</span><span class="pl-s">'/api/process'</span><span class="pl-kos">,</span> <span class="pl-k">async</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-k">const</span> <span class="pl-s1">data</span> <span class="pl-c1">=</span> <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">.</span><span class="pl-c1">data</span><span class="pl-kos">;</span>  <span class="pl-c">// 可能包含數百萬筆資料</span>
+  <span class="pl-k">const</span> <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-en">processAllData</span><span class="pl-kos">(</span><span class="pl-s1">data</span><span class="pl-kos">)</span><span class="pl-kos">;</span>  <span class="pl-c">// 未限制處理時間</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-s1">result</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <p>攻擊者發送大量資料導致伺服器資源耗盡。</p>
 <p><strong>案例 3：空指標異常導致系統崩潰</strong></p>
 <p>某應用程式未檢查空值：</p>
-<pre lang="javascript" class="notranslate"><code class="notranslate">const user = await User.findById(userId);
-const email = user.email;  // 如果 user 為 null，會拋出異常
-</code></pre>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">User</span><span class="pl-kos">.</span><span class="pl-en">findById</span><span class="pl-kos">(</span><span class="pl-s1">userId</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">email</span> <span class="pl-c1">=</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">email</span><span class="pl-kos">;</span>  <span class="pl-c">// 如果 user 為 null，會拋出異常</span></pre></div>
 <p>當 userId 不存在時，應用程式會崩潰。</p>
 <h3>12.4 防禦最佳實踐</h3>
 <h4>設計階段防禦</h4>
@@ -1826,115 +1798,111 @@ const email = user.email;  // 如果 user 為 null，會拋出異常
 <ol>
 <li><strong>適當的錯誤處理</strong></li>
 </ol>
-<pre lang="javascript" class="notranslate"><code class="notranslate">// 不安全的錯誤處理
-app.use((err, req, res, next) =&gt; {
-  res.status(500).json({
-    error: err.message,  // 洩露詳細錯誤資訊
-    stack: err.stack    // 洩露堆疊追蹤
-  });
-});
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 不安全的錯誤處理</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">,</span> <span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">,</span> <span class="pl-s1">next</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">500</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">error</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">message</span><span class="pl-kos">,</span>  <span class="pl-c">// 洩露詳細錯誤資訊</span>
+    <span class="pl-c1">stack</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">stack</span>    <span class="pl-c">// 洩露堆疊追蹤</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-// 安全的錯誤處理
-app.use((err, req, res, next) =&gt; {
-  // 記錄詳細錯誤到日誌（僅伺服器端）
-  console.error('Error:', {
-    message: err.message,
-    stack: err.stack,
-    url: req.url,
-    method: req.method,
-    timestamp: new Date().toISOString()
-  });
+<span class="pl-c">// 安全的錯誤處理</span>
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">,</span> <span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">,</span> <span class="pl-s1">next</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-c">// 記錄詳細錯誤到日誌（僅伺服器端）</span>
+  <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">error</span><span class="pl-kos">(</span><span class="pl-s">'Error:'</span><span class="pl-kos">,</span> <span class="pl-kos">{</span>
+    <span class="pl-c1">message</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">message</span><span class="pl-kos">,</span>
+    <span class="pl-c1">stack</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">stack</span><span class="pl-kos">,</span>
+    <span class="pl-c1">url</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">url</span><span class="pl-kos">,</span>
+    <span class="pl-c1">method</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">method</span><span class="pl-kos">,</span>
+    <span class="pl-c1">timestamp</span>: <span class="pl-k">new</span> <span class="pl-v">Date</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">toISOString</span><span class="pl-kos">(</span><span class="pl-kos">)</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
   
-  // 根據錯誤類型返回適當的錯誤訊息
-  if (err instanceof ValidationError) {
-    return res.status(400).json({
-      error: 'Invalid input',
-      details: err.details  // 僅包含驗證錯誤，不包含系統資訊
-    });
-  }
+  <span class="pl-c">// 根據錯誤類型返回適當的錯誤訊息</span>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">err</span> <span class="pl-k">instanceof</span> <span class="pl-v">ValidationError</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">400</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+      <span class="pl-c1">error</span>: <span class="pl-s">'Invalid input'</span><span class="pl-kos">,</span>
+      <span class="pl-c1">details</span>: <span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">details</span>  <span class="pl-c">// 僅包含驗證錯誤，不包含系統資訊</span>
+    <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
   
-  if (err instanceof AuthenticationError) {
-    return res.status(401).json({
-      error: 'Authentication failed'
-    });
-  }
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">err</span> <span class="pl-k">instanceof</span> <span class="pl-v">AuthenticationError</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">401</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+      <span class="pl-c1">error</span>: <span class="pl-s">'Authentication failed'</span>
+    <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
   
-  // 通用錯誤訊息（不洩露系統資訊）
-  res.status(500).json({
-    error: 'An error occurred',
-    requestId: req.id  // 提供請求 ID 以便追蹤
-  });
-});
-</code></pre>
+  <span class="pl-c">// 通用錯誤訊息（不洩露系統資訊）</span>
+  <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">500</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+    <span class="pl-c1">error</span>: <span class="pl-s">'An error occurred'</span><span class="pl-kos">,</span>
+    <span class="pl-c1">requestId</span>: <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">id</span>  <span class="pl-c">// 提供請求 ID 以便追蹤</span>
+  <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <ol start="2">
 <li><strong>空值檢查</strong></li>
 </ol>
-<pre lang="javascript" class="notranslate"><code class="notranslate">// 不安全的實作
-const user = await User.findById(userId);
-const email = user.email;
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 不安全的實作</span>
+<span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">User</span><span class="pl-kos">.</span><span class="pl-en">findById</span><span class="pl-kos">(</span><span class="pl-s1">userId</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-k">const</span> <span class="pl-s1">email</span> <span class="pl-c1">=</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">email</span><span class="pl-kos">;</span>
 
-// 安全的實作
-const user = await User.findById(userId);
-if (!user) {
-  return res.status(404).json({ error: 'User not found' });
-}
-const email = user.email;
-</code></pre>
+<span class="pl-c">// 安全的實作</span>
+<span class="pl-k">const</span> <span class="pl-s1">user</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-v">User</span><span class="pl-kos">.</span><span class="pl-en">findById</span><span class="pl-kos">(</span><span class="pl-s1">userId</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-c1">!</span><span class="pl-s1">user</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">404</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'User not found'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
+<span class="pl-k">const</span> <span class="pl-s1">email</span> <span class="pl-c1">=</span> <span class="pl-s1">user</span><span class="pl-kos">.</span><span class="pl-c1">email</span><span class="pl-kos">;</span></pre></div>
 <ol start="3">
 <li><strong>資源限制</strong></li>
 </ol>
-<pre lang="javascript" class="notranslate"><code class="notranslate">// 實施超時機制
-const timeout = require('connect-timeout');
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-c">// 實施超時機制</span>
+<span class="pl-k">const</span> <span class="pl-s1">timeout</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">'connect-timeout'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
 
-app.use(timeout('30s'));  // 設定 30 秒超時
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">use</span><span class="pl-kos">(</span><span class="pl-s1">timeout</span><span class="pl-kos">(</span><span class="pl-s">'30s'</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>  <span class="pl-c">// 設定 30 秒超時</span>
 
-app.post('/api/process', async (req, res) =&gt; {
-  // 檢查請求大小
-  if (req.body.data &amp;&amp; req.body.data.length &gt; 10000) {
-    return res.status(413).json({ error: 'Payload too large' });
-  }
+<span class="pl-s1">app</span><span class="pl-kos">.</span><span class="pl-en">post</span><span class="pl-kos">(</span><span class="pl-s">'/api/process'</span><span class="pl-kos">,</span> <span class="pl-k">async</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">,</span> <span class="pl-s1">res</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-c">// 檢查請求大小</span>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">.</span><span class="pl-c1">data</span> <span class="pl-c1">&amp;&amp;</span> <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">.</span><span class="pl-c1">data</span><span class="pl-kos">.</span><span class="pl-c1">length</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">10000</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">413</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Payload too large'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
   
-  // 實施處理時間限制
-  const startTime = Date.now();
-  const maxProcessingTime = 10000;  // 10 秒
+  <span class="pl-c">// 實施處理時間限制</span>
+  <span class="pl-k">const</span> <span class="pl-s1">startTime</span> <span class="pl-c1">=</span> <span class="pl-v">Date</span><span class="pl-kos">.</span><span class="pl-en">now</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-k">const</span> <span class="pl-s1">maxProcessingTime</span> <span class="pl-c1">=</span> <span class="pl-c1">10000</span><span class="pl-kos">;</span>  <span class="pl-c">// 10 秒</span>
   
-  try {
-    const result = await processDataWithTimeout(
-      req.body.data,
-      maxProcessingTime
-    );
-    res.json(result);
-  } catch (err) {
-    if (err.name === 'TimeoutError') {
-      return res.status(408).json({ error: 'Request timeout' });
-    }
-    throw err;
-  }
-});
-</code></pre>
+  <span class="pl-k">try</span> <span class="pl-kos">{</span>
+    <span class="pl-k">const</span> <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-k">await</span> <span class="pl-en">processDataWithTimeout</span><span class="pl-kos">(</span>
+      <span class="pl-s1">req</span><span class="pl-kos">.</span><span class="pl-c1">body</span><span class="pl-kos">.</span><span class="pl-c1">data</span><span class="pl-kos">,</span>
+      <span class="pl-s1">maxProcessingTime</span>
+    <span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-s1">result</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span> <span class="pl-k">catch</span> <span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">err</span><span class="pl-kos">.</span><span class="pl-c1">name</span> <span class="pl-c1">===</span> <span class="pl-s">'TimeoutError'</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+      <span class="pl-k">return</span> <span class="pl-s1">res</span><span class="pl-kos">.</span><span class="pl-en">status</span><span class="pl-kos">(</span><span class="pl-c1">408</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">json</span><span class="pl-kos">(</span><span class="pl-kos">{</span> <span class="pl-c1">error</span>: <span class="pl-s">'Request timeout'</span> <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
+    <span class="pl-k">throw</span> <span class="pl-s1">err</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <ol start="4">
 <li><strong>輸入驗證與清理</strong></li>
 </ol>
-<pre lang="javascript" class="notranslate"><code class="notranslate">function validateInput(input) {
-  // 檢查空值
-  if (input === null || input === undefined) {
-    throw new ValidationError('Input cannot be null');
-  }
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-k">function</span> <span class="pl-en">validateInput</span><span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-c">// 檢查空值</span>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">input</span> <span class="pl-c1">===</span> <span class="pl-c1">null</span> <span class="pl-c1">||</span> <span class="pl-s1">input</span> <span class="pl-c1">===</span> <span class="pl-c1">undefined</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-v">ValidationError</span><span class="pl-kos">(</span><span class="pl-s">'Input cannot be null'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
   
-  // 檢查類型
-  if (typeof input !== 'string') {
-    throw new ValidationError('Input must be a string');
-  }
+  <span class="pl-c">// 檢查類型</span>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-k">typeof</span> <span class="pl-s1">input</span> <span class="pl-c1">!==</span> <span class="pl-s">'string'</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-v">ValidationError</span><span class="pl-kos">(</span><span class="pl-s">'Input must be a string'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
   
-  // 檢查長度
-  if (input.length &gt; 1000) {
-    throw new ValidationError('Input too long');
-  }
+  <span class="pl-c">// 檢查長度</span>
+  <span class="pl-k">if</span> <span class="pl-kos">(</span><span class="pl-s1">input</span><span class="pl-kos">.</span><span class="pl-c1">length</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">1000</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-v">ValidationError</span><span class="pl-kos">(</span><span class="pl-s">'Input too long'</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-kos">}</span>
   
-  // 清理輸入
-  return input.trim();
-}
-</code></pre>
+  <span class="pl-c">// 清理輸入</span>
+  <span class="pl-k">return</span> <span class="pl-s1">input</span><span class="pl-kos">.</span><span class="pl-en">trim</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span></pre></div>
 <h4>部署階段防禦</h4>
 <ol>
 <li>
